@@ -1,0 +1,78 @@
+---
+title: "HPC + Shell Basics (Bash) + SLURM"
+subtitle: "setting-up"
+footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+logo: "images/logo.png"
+format: 
+  revealjs: 
+    transition: fade
+    slide-number: true
+editor: visual
+execute:
+  freeze: auto
+---
+
+## High-Performance Computing (HPC)
+
+---
+
+### Introduction to HPC
+
+- What is HPC?
+- Importance of HPC in scientific research
+- Key components of HPC systems
+
+---
+
+### Shell Basics (bash)
+
+#### Introduction to Shell
+
+- What is a shell?
+- Types of shells
+- Basic shell commands
+
+#### Navigation and File Operations
+
+- Navigating the file system
+- Creating, copying, moving, and deleting files and directories
+- Listing files and directories
+
+#### Shell Scripting Basics
+
+- Writing and executing shell scripts
+- Variables and data types
+- Control structures (if statements, loops)
+
+---
+
+### SLURM (Simple Linux Utility for Resource Management)
+
+#### Introduction to SLURM
+
+- What is SLURM?
+- Purpose and features
+- SLURM architecture
+
+#### SLURM Basic Commands
+
+- Submitting jobs
+- Monitoring jobs
+- Managing job queues
+- Cancelling jobs
+
+#### Advanced SLURM Features
+
+- Job arrays
+- Job dependencies
+- Resource specifications
+- Advanced scheduling options
+
+---
+
+### Conclusion
+
+- Recap of key points
+- Importance of HPC, shell basics, and SLURM in computational research
+- Further resources for learning
+

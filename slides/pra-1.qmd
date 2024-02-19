@@ -1,0 +1,100 @@
+---
+title: "GWAS QC + PCA + Association Testing"
+subtitle: ""
+footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+logo: "images/logo.png"
+format: 
+  revealjs: 
+    transition: fade
+    slide-number: true
+editor: visual
+execute:
+  freeze: auto
+---
+
+## Introduction
+
+- Brief overview of GWAS
+- Importance of quality control (QC)
+- Need for ancestry determination
+- Role of principal component analysis (PCA)
+
+---
+
+## GWAS Quality Control (QC)
+
+- Importance of QC
+- Data preprocessing steps
+- Identifying and removing low-quality samples and variants
+- Tools and techniques used for QC
+
+---
+
+## Principal Component Analysis (PCA)
+
+- Concept of PCA
+- Application in ancestry determination
+- Plotting PCA results
+- Interpreting PCA plots to infer ancestry
+
+---
+
+## Ancestry Determination
+
+- Why is ancestry important?
+- Challenges in determining ancestry
+- Using PCA for ancestry inference
+- Limitations of ancestry determination methods
+
+---
+
+## Association Testing
+
+- Basics of association testing
+- Common statistical tests used
+- Correcting for population structure
+- Challenges and considerations in association testing
+
+---
+
+## QC + PCA Workflow
+
+- Illustrative workflow diagram
+- Integration of QC and PCA
+- Importance of sequential analysis steps
+- Examples of QC and PCA results
+
+---
+
+## Case Study: Ancestry Inference
+
+- Real-world example
+- Application of QC and PCA
+- Inference of ancestry using GWAS data
+- Interpretation of ancestry results
+
+---
+
+## Case Study: Association Testing
+
+- Application of association testing
+- Accounting for population structure
+- Identifying genetic variants associated with traits
+- Implications of association testing results
+
+---
+
+## Conclusion
+
+- Summary of key points
+- Importance of QC, PCA, and ancestry determination
+- Future directions in GWAS analysis
+- Q&A session
+
+---
+
+## Questions?
+
+- Thank you for your attention!
+- Any questions or comments?
+- Contact information

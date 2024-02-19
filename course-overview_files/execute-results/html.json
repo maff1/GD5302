@@ -1,0 +1,11 @@
+{
+  "hash": "be3c2c9c29977b04d32e4cf4c54d19bb",
+  "result": {
+    "markdown": "---\ntitle: \"GD5302: Health Data Science Practice\"\nformat: html\neditor: visual\n---\n\n```{css, echo = FALSE}\n.justify {\n  text-align: justify !important\n}\n```\n\n\n::: {.justify}\nThis module caters to MSc students interested in delving into the practical aspects of **Health data science**, offering insights into medical data analysis techniques and ethical considerations. Through the course, participants will acquire hands-on experience in programmatically handling medical data, tackling genuine clinical challenges, and exploring the potential solutions offered by Health Data Science.\n:::\n\n",
+    "supporting": [
+      "course-overview_files/figure-html"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

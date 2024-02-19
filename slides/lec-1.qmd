@@ -1,0 +1,73 @@
+---
+title: "GWAS Statistics + Polygenic Risk Scores (PRS)"
+subtitle: ""
+footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+logo: "images/logo.png"
+format: 
+  revealjs: 
+    transition: fade
+    slide-number: true
+editor: visual
+execute:
+  freeze: auto
+---
+
+## Polygenic Risk Scores (PRS)
+
+- Definition and concept
+- Construction of PRS
+- Applications of PRS in research and medicine
+
+---
+
+## Statistical Methods in GWAS
+
+- SNP association testing
+- Correction for multiple testing
+- Linkage disequilibrium (LD) pruning
+
+---
+
+## PRS Construction
+
+- Choosing SNPs for PRS
+- Weighting SNPs
+- Calculating the PRS
+
+---
+
+## Applications of PRS
+
+- Predictive modeling in complex diseases
+- Precision medicine applications
+- Ethical considerations
+
+---
+
+## Challenges and Limitations
+
+- Sample size requirements
+- Generalizability of findings
+- Interpretation of results
+
+---
+
+## Future Directions
+
+- Advanced statistical methods
+- Incorporating functional genomics data
+- Integration with other omics data
+
+---
+
+## Conclusion
+
+- Recap of key points
+- Importance of GWAS and PRS in genetics research
+
+---
+
+## Questions?
+
+- Thank you for your attention!
+- Any questions or comments?

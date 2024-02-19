@@ -1,0 +1,88 @@
+---
+title: "PRS + Gradient Boosting Machines (GBM)"
+subtitle: ""
+footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+logo: "images/logo.png"
+format: 
+  revealjs: 
+    transition: fade
+    slide-number: true
+editor: visual
+execute:
+  freeze: auto
+---
+
+## Overview
+
+- Introduction to Polygenic Risk Scores (PRS)
+- Introduction to Gradient Boosting Machines (GBM)
+
+---
+
+## Polygenic Risk Scores (PRS)
+
+- Definition and concept
+- Construction of PRS
+- Applications of PRS in genetics research
+
+---
+
+## Gradient Boosting Machines (GBM)
+
+- What are GBMs?
+- How GBMs work
+- Applications of GBMs in predictive modeling
+
+---
+
+## Building PRS using GBMs
+
+- Using GBMs to select and weight SNPs
+- Incorporating other features into PRS construction
+- Comparison with traditional PRS construction methods
+
+---
+
+## Advantages of GBMs in PRS Construction
+
+- Non-linear relationships
+- Feature interactions
+- Handling missing data
+
+---
+
+## Challenges and Limitations
+
+- Interpretability of GBMs
+- Overfitting concerns
+- Computational complexity
+
+---
+
+## Applications of PRS + GBM
+
+- Predictive modeling in complex diseases
+- Personalized medicine applications
+- Risk stratification in clinical settings
+
+---
+
+## Future Directions
+
+- Incorporating multi-omics data
+- Improving interpretability of GBMs
+- Integration with other machine learning approaches
+
+---
+
+## Conclusion
+
+- Recap of key points
+- Importance of PRS and GBMs in genetics and healthcare
+
+---
+
+## Questions?
+
+- Thank you for your attention!
+- Any questions or comments?

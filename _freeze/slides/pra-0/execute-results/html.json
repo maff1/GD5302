@@ -1,0 +1,18 @@
+{
+  "hash": "628579ec73055e177318016a43bc1278",
+  "result": {
+    "markdown": "---\ntitle: \"HPC + Shell basics + SLURM\"\nsubtitle: \"introduction\"\nfooter:  \"[maff1.github.io/website](https://maff1.io/website/)\"\nlogo: \"images/logo.png\"\nformat: \n  revealjs: \n    theme: slides.scss\n    transition: fade\n    slide-number: true\neditor: visual\nexecute:\n  freeze: auto\n---\n\n\n\n\n## Meet your TA!\n\n![](images/hello-sticker.jpeg){fig-alt=\"Red sticker with overlaid text \\\"Hello, my name is...\\\"\" fig-align=\"center\" width=\"400\"}\n\n## Meet each other!\n\nIn breakout rooms:\n\n-   Name, year, major, hometown\n-   What did you do over the winter break?\n-   What do you hope to get out of this course?\n-   Anything else you want to share/ask?\n\n\n::: {.cell hash='pra-0_cache/revealjs/unnamed-chunk-2_33fbf0b132f2b54c4132f18c66cc4b61'}\n\n:::\n\n\n## Take the survey\n\n-   Go to the course website:\n\n    [https://maff1/website](maff1.github.io/website)\n\n-   Click on the instructions for Lab 0 on the course schedule\n\n-   Take the *Getting to know you* survey\n\n## **What to expect in lab**\n\n-   Introduction to the lab assignment (\\~ 5 - 10 minutes)\n\n-   Work on the lab assignment (individual at first, but in teams for the rest of the semester)\n\n-   Lab instructions posted on the [course website](https://maff1.github.io/website/ \"UOSTA 001 Course website\").\n\n-   Start each lab by finding your assignment repo in the course GitHub organization\n\n-   More on all of these tools in lecture tomorrow and in lab next week\n\n## Wrap up\n\nAny questions about the course?\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

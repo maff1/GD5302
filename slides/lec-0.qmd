@@ -1,0 +1,76 @@
+---
+title: "Genome-wide Association Studies (GWAS) and Disease"
+subtitle: ""
+footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+logo: "images/logo.png"
+format: 
+  revealjs: 
+    transition: fade
+    slide-number: true
+editor: visual
+execute:
+  freeze: auto
+---
+
+## Introduction
+
+- What are GWAS?
+- Importance of GWAS in disease research
+- Key concepts: SNPs, genetic variants, allele frequencies
+
+---
+
+## Methodology
+
+1. Study design
+2. Data collection
+3. Statistical analysis
+4. Replication and validation
+
+---
+
+## Case Study: Diabetes
+
+- Brief overview of diabetes
+- GWAS findings related to diabetes
+- Implications for understanding disease mechanisms
+
+---
+
+## Case Study: Cancer
+
+- Overview of cancer
+- GWAS findings related to cancer susceptibility
+- Potential applications in personalized medicine
+
+---
+
+## Challenges and Limitations
+
+- Population stratification
+- Statistical power
+- Replication issues
+- Interpretation of results
+
+---
+
+## Future Directions
+
+- Multi-omics integration
+- Machine learning approaches
+- Pharmacogenomics
+- Ethical considerations
+
+---
+
+## Conclusion
+
+- Recap of key points
+- Importance of GWAS in advancing precision medicine
+- Future prospects and challenges
+
+---
+
+## Questions?
+
+---

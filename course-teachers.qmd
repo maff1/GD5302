@@ -1,0 +1,8 @@
+---
+title: "Module Teachers"
+---
+
+|Teacher|Contact|
+|-----|-----|
+|[Marco Fernandes](https://research-portal.st-andrews.ac.uk/en/persons/marco-ferreira-fernandes)|School of Medicine|
+|[Paul Johnston](https://research-portal.st-andrews.ac.uk/en/persons/paul-johnston)|School of Medicine|

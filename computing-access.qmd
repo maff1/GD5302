@@ -1,0 +1,5 @@
+---
+title: "Computing access"
+---
+
+To access computing resources for the introductory data science courses.

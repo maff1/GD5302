@@ -1,0 +1,14 @@
+{
+  "hash": "dbc75b886c00ff8f93db41f78b4208af",
+  "result": {
+    "markdown": "---\ntitle: \"GD5302: Health Data Science Practice\"\ntbl-colwidths: [5,10,30,5,5,5,5,5,5,5]\n---\n\n\nThis page contains an outline of the topics, content, and coursework for the Practice module.\n\n\n::: column-screen-inset-right\n|Week|Date|Topic|Slides|Cheatsheet|Coursework|\n|:------:|--------|--------|:------:|:------:|:------:|\n|7|Fri, Mar 8 - 12-2PM|Practice 0 - HPC + Shell basics (Bash) + SLURM |[🖥️](/slides/pra-0.html \"Pra slides\"){aria-label=\"Pratice 0 slides\"}|\n|8|Wed, Mar 13 - 9-10AM|Lecture 0 - Genome-wide Association Studies (GWAS) and Disease|[🖥️](/slides/lec-0.html \"Lec slides\"){aria-label=\"Lecture 0 slides\"}| \n|8|Fri, Mar 15 - 12-2PM|Practice 1 - GWAS QC + PCA + Association Testing|[🖥️](/slides/pra-1.html \"Pra slides\"){aria-label=\"Pratice 1 slides\"}|\n|9|Wed, Mar 20 - 9-10AM|Lecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)|[🖥️](/slides/lec-1.html \"Lec slides\"){aria-label=\"Lecture 1 slides\"}|\n|9|Fri, Mar 22 - 12-2PM|Practice 2 - PRS + Gradient Boosting Machines (GBM)|[🖥️](/slides/pra-2.html \"Pra slides\"){aria-label=\"Practice 2 slides\"}|\n|||Coursework|||[🖥️](/slides/lab-0.html \"Coursework\"){aria-label=\"Coursework description\"}|\n:::\n\n\n::: {.cell hash='index_cache/html/unnamed-chunk-1_344cd472c1215d99ad8bc05835a5429d'}\n\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

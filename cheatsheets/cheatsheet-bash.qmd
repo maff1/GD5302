@@ -1,0 +1,44 @@
+---
+title: "Bash - cheatsheet"
+---
+
+| Command                | Description                                          |
+|------------------------|------------------------------------------------------|
+| `ls`                   | List directory contents                              |
+| `cd`                   | Change directory                                     |
+| `pwd`                  | Print working directory                              |
+| `mkdir`                | Create a directory                                   |
+| `rmdir`                | Remove a directory                                   |
+| `touch`                | Create an empty file                                 |
+| `rm`                   | Remove files or directories                          |
+| `cp`                   | Copy files or directories                            |
+| `mv`                   | Move or rename files or directories                  |
+| `cat`                  | Concatenate and display files                        |
+| `grep`                 | Search for patterns in files                         |
+| `head`                 | Display the beginning of a file                      |
+| `tail`                 | Display the end of a file                            |
+| `chmod`                | Change file permissions                              |
+| `chown`                | Change file owner and group                          |
+| `echo`                 | Display a line of text                               |
+| `man`                  | Display the manual page for a command                |
+| `nano`                 | A simple text editor                                 |
+| `vim` or `vi`          | A powerful text editor                               |
+| `wc`                   | Count words, lines, and characters in a file         |
+| `tee`                  | Read from standard input and write to standard output and files |
+| `find`                 | Search for files in a directory hierarchy            |
+| `grep`                 | Search for patterns in files                         |
+| `sort`                 | Sort lines of text files                             |
+| `tar`                  | Manipulate archives in tar format                    |
+| `zip`                  | Compress files into a zip archive                    |
+| `unzip`                | Extract files from a zip archive                     |
+| `ssh`                  | Secure Shell - connect to a remote server            |
+| `scp`                  | Securely copy files between hosts using SSH          |
+| `curl`                 | Transfer data from or to a server                    |
+| `wget`                 | Download files from the internet                      |
+| `ps`                   | Display information about processes                   |
+| `kill`                 | Terminate processes by ID or name                    |
+| `top`                  | Display system processes and their resource usage     |
+| `df`                   | Display disk space usage                             |
+| `du`                   | Estimate file space usage                             |
+| `uname`                | Display system information                           |
+| `exit`                 | Exit the shell                                       |

@@ -1,0 +1,44 @@
+---
+title: "SLURM - cheatsheet"
+---
+
+**SLURM** (Simple Linux Utility for Resource Management) is a job scheduling system used on many HPC (High-Performance Computing) clusters. It allows users to submit, monitor, and manage jobs efficiently.
+
+## Basic Commands
+
+| Command                      | Description                                       |
+|------------------------------|---------------------------------------------------|
+| `sbatch <script>`            | Submit a job script to the SLURM scheduler        |
+| `squeue`                     | View the status of all jobs in the queue          |
+| `sinfo`                      | Display information about SLURM nodes and partitions |
+| `scancel <job_id>`           | Cancel a specific job                             |
+| `scontrol show job <job_id>` | Display detailed information about a job           |
+| `sacct`                      | View job accounting information                    |
+| `salloc`                     | Allocate resources for interactive job sessions   |
+| `srun <command>`             | Run a command or executable on SLURM              |
+| `sview`                      | Open a graphical interface to view SLURM status   |
+
+## Job Script Directives
+
+SLURM job scripts include directives that specify job parameters and resource requirements. Here are some common directives:
+
+- `#SBATCH -J <job_name>`: Set the job name
+- `#SBATCH -N <num_nodes>`: Request a specific number of nodes
+- `#SBATCH -n <num_tasks>`: Request a specific number of tasks (cores)
+- `#SBATCH -p <partition>`: Specify the partition or queue to submit the job to
+- `#SBATCH -t <time_limit>`: Set the maximum time limit for the job
+- `#SBATCH --mem=<memory>`: Specify the memory requirements for the job
+- `#SBATCH -o <output_file>`: Redirect standard output
+- `#SBATCH -e <error_file>`: Redirect standard error
+
+::: {.callout-caution collapse="true"}
+## Example job script
+#!/bin/bash
+#SBATCH -J myjob
+#SBATCH -N 1
+#SBATCH -n 4
+#SBATCH -p general
+#SBATCH -t 1:00:00
+
+srun ./my_program
+:::
