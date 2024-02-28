@@ -1,7 +1,7 @@
 ---
-title: "GWAS QC + PCA + Association Testing"
+title: "GWAS QC + PCA"
 subtitle: ""
-footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+footer:  "[maff1.github.io/gd5302](https://maff1.io/gd5302/)"
 logo: "images/logo.png"
 format: 
   revealjs: 
@@ -12,84 +12,639 @@ execute:
   freeze: auto
 ---
 
-## Introduction
+### PLINK basics
 
-- Brief overview of GWAS
-- Importance of quality control (QC)
-- Need for ancestry determination
-- Role of principal component analysis (PCA)
+In this practical, we will learn the basics of genotype data QC using `PLINK`, which is one of the most commonly used software in complex trait genomics. [PLINK1.9](https://www.cog-genomics.org/plink/1.9/credits) & [PLINK2](https://www.cog-genomics.org/plink/2.0/credits)
+
+### Conda Env
+
+```Bash
+source gd5302
+```
 
 ---
 
-## GWAS Quality Control (QC)
+### Genotype Data
 
-- Importance of QC
-- Data preprocessing steps
-- Identifying and removing low-quality samples and variants
-- Tools and techniques used for QC
+Next, we need to download the sample genotype data. The way to create the sample data is described [here].(https://cloufield.github.io/GWASTutorial/01_Dataset/)
+This dataset contains 504 EAS individuals from 1000 Genome Project Phase 3 with ~1M variants.
+
+```Bash
+    cd /scratch/bioinf/gd5302/data/p1/01_dataset
+    ls -al
+```
+
+Should see three PLINK files
+
+```Bash
+    -rw-r--r--. 1 maff1 bioinf 155624619 Dec 26 05:59 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bed
+    -rw-r--r--. 1 maff1 bioinf  41100120 Dec 26 05:59 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bim
+    -rw-r--r--. 1 maff1 bioinf     12600 Dec 26 06:00 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.fam
+```
+
+---
+
+Check the `bim` file
+
+```Bash
+    head -n3 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bim
+    1       1:14930:A:G     0       14930   G       A
+    1       1:15774:G:A     0       15774   A       G
+    1       1:15777:A:G     0       15777   G       A
+```
+
+Check the `fam` file
+
+```Bash
+    head -n3 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.fam
+    HG00403 HG00403 0 0 0 -9
+    HG00404 HG00404 0 0 0 -9
+    HG00406 HG00406 0 0 0 -9
+```
+
+---
+
+## QC with PLINK
+
+1. Calculate missing rate/ call rate
+2. Calculate allele Frequency
+3. Conduct Hardy-Weinberg equilibrium exact test
+4. Conduct LD-Pruning
+5. Calculate inbreeding F-coefficient
+6. Conduct sample & SNP filtering
+7. Data management (make-bed/recode)
+8. PCA
+Scripts for this practical are available in `/scratch/bioinf/gd5302/data/p1/01_dataset`
+
+---
+
+### Missing rate (call rate)
+
+The first thing we want to know is the missing rate of our data. Usually, we need to check the missing rate of samples and SNPs to decide a threshold to exclude low-quality samples and SNPs.
+
+- **Sample missing rate**: the proportion of missing values for an individual across all SNPs.
+- **SNP missing rate**: the proportion of missing values for a SNP across all samples.
+
+---
+
+### Missing rate (call rate)
+
+Suppose we have N samples and M SNPs for each sample.
+    
+For sample $j$ :
+    
+$$Sample\ Missing\ Rate_{j} = {{N_{missing\ SNPs\ for\ j}}\over{M}} = 1 - Call\ Rate_{sample, j}$$
+    
+For SNP $i$ :
+    
+$$SNP\ Missing\ Rate_{i} = {{N_{missing\ samples\ at\ i}}\over{N}} = 1 - Call\ Rate_{SNP, i}$$
+
+The input is PLINK bed/bim/fam file. Use prefix to `--bfile` option.
+
+---
+
+### Missing rate (call rate)
+
+To calculate the missing rate, we need the flag `--missing`, which tells PLINK to calculate the missing rate in the dataset specified by `--bfile`. 
+
+```Bash
+    cd /scratch/bioinf/gd5302/data/p1/01_dataset/02_data_qc
+    
+    plink \
+    	--bfile ${genotypeFile} \
+    	--missing \
+    	--out plink_results
+```
+
+---
+
+This will output two files `plink_results.imiss` and `plink_results.lmiss`, which contain the missing rate information for samples and SNPs respectively.
+Take a look at the `.imiss` file. The `F_MISS` shows the missing rate for samples. 
+
+```Bash
+head -n4 plink_results.imiss
+    FID       IID MISS_PHENO   N_MISS   N_GENO   F_MISS
+HG00403   HG00403          Y    10020  1235116 0.008113
+HG00404   HG00404          Y     9192  1235116 0.007442
+HG00406   HG00406          Y    15751  1235116  0.01275
+```
+
+```Bash
+head -n4 plink_results.lmiss
+ CHR              SNP   N_MISS   N_GENO   F_MISS
+   1      1:14930:A:G        2      504 0.003968
+   1      1:15774:G:A        3      504 0.005952
+   1      1:15777:A:G        3      504 0.005952
+```
+
+---
+
+### Allele Frequency
+
+One of the most important statistics in GWAS/ SNPs is their frequency in a certain population.
+Variants can be categorized into three groups based on their `Minor Allele Frequency` (MAF):
+
+1. **Common variants** : MAF>=0.05
+2. **Low-frequency variants** : 0.01<=MAF<0.05
+3. **Rare variants** : MAF<0.01
+
+---
+
+### Allele Frequency
+
+Suppose the reference allele (REF) is A and the alternative allele(ALT) is B for a certain SNP. The posible genotypes are AA, AB and BB.  In a population of N samples (2N alleles), $N = N_{AA} + 2 \times N_{AB} + N_{BB}$ :
+    
+- the number of A alleles:  $N_A = 2 \times N_{AA} + N_{AB}$
+- the number of B alleles:  $N_B = 2 \times N_{BB} + N_{AB}$
+    
+So we can calculate the allele frequency:
+    
+- Reference Allele Frequency : $AF_{REF}= {{N_A}\over{N_A + N_B}}$
+- Alternative Allele Frequency : $AF_{ALT}= {{N_B}\over{N_A + N_B}}$
+    
+The MAF for this SNP in this specific population is defined as:
+    
+$MAF = min( AF_{REF}, AF_{ALT} )$
+
+---
+
+### Allele Frequency
+
+Calculate MAF of variants with `PLINK1.9`
+
+```Bash
+    plink \
+    	--bfile ${genotypeFile} \
+    	--freq \
+    	--out plink_results
+```
+
+
+```Bash
+    head -n4 plink_results.frq
+    CHR              SNP   A1   A2          MAF  NCHROBS
+    1      1:14930:A:G    G    A       0.4133     1004
+    1      1:15774:G:A    A    G      0.02794     1002
+    1      1:15777:A:G    G    A      0.07385     1002
+```
+
+---
+
+### Allele Frequency
+
+Calculate MAF of variants with `PLINK2`
+
+```Bash
+    plink2 \
+            --bfile ${genotypeFile} \
+            --freq \
+            --out plink_results
+```
+
+
+```bash
+    # results from plink2
+    head -n4 plink_results.afreq
+    #CHROM  ID      REF     ALT     PROVISIONAL_REF?        ALT_FREQS       OBS_CT
+    1       1:14930:A:G     A       G       Y       0.413347        1004
+    1       1:15774:G:A     G       A       Y       0.0279441       1002
+    1       1:15777:A:G     A       G       Y       0.0738523       1002
+```
+
+---
+
+### Allele Frequency
+
+::: {.callout-warning}
+In `PLINK1.9`, the concept here is minor (A1) and major (A2) allele, while in `PLINK2` it is the reference (REF) allele and the alternative (ALT) allele.
+:::
+
+- **Major / Minor**: Major allele and minor allele are defined as the allele with the highest and lower allele in a given population, respectively. Then, major and minor alleles for a certain SNP might be different in two independent populations. The range for MAF(minor allele frequencies) is [0,0.5].
+- **Ref / Alt**: The reference (REF) and alternative (ALT) alleles are simply determined by the allele on a reference genome. If we use the same reference genome, the reference(REF) and alternative(ALT) alleles will be the same across populations. The reference allele could be major or minor in different populations. The range for alternative allele frequency is [0,1], since it could be the major allele or the minor allele in a given population.
+
+---
+
+### Hardy-Weinberg equilibrium exact test
+
+The Plink flag `--hardy` will perform Hardy-Weinberg equilibrium exact test for each variant.
+The following command calculates the Hardy-Weinberg equilibrium exact test statistics for all SNPs.
+
+Suppose we have N unrelated samples (2N alleles).
+Under HWE, the **exact probability** of observing $n_{AB}$ sample with genotype AB in N samples is:
+$$P(N_{AB} = n_{AB} | N, n_A) = {{2^{n_{AB}}}N!\over{n_{AA}!n_{AB}!n_{BB}!}} \times {{n_A!n_B!}\over{n_A!n_B!}} $$
+    
+To compute the Hardy-Weinberg equilibrium exact test statistics, we will sum up the probabilities of all configurations with probability equal to or less than the observed configuration :
+
+$$P_{HWE} = \sum_{n^{*}_AB} I[P(N_{AB} = n_{AB} | N, n_A) \geqq P(N_{AB} = n^{*}_{AB} | N, n_A)] \times P(N_{AB} = n^{*}_{AB} | N, n_A)$$
+
+$I(x)$ is the indicator function. If x is true, $I(x) = 1$; otherwise, $I(x) = 0$.
+
+---
+
+### Hardy-Weinberg equilibrium exact test
+
+Calculate the HWE exact test statistics"
+
+```Bash
+    plink \
+    	--bfile ${genotypeFile} \
+    	--hardy \
+    	--out plink_results
+```
+
+
+```Bash
+    head -n4 plink_results.hwe
+        CHR              SNP     TEST   A1   A2                 GENO   O(HET)   E(HET)            P
+    1      1:14930:A:G  ALL(NP)    G    A             4/407/91   0.8108    0.485    4.864e-61
+    1      1:15774:G:A  ALL(NP)    A    G             0/28/473  0.05589  0.05433            1
+    1      1:15777:A:G  ALL(NP)    G    A             1/72/428   0.1437   0.1368       0.5053
+```
+
+---
+
+### Applying filters
+
+Previously we calculated the basic statistics using `PLINK`. But, when performing certain analyses, we just want to exclude the bad-quality samples or SNPs instead of calculating the statistics for all samples and SNPs.
+
+We can apply the following filters for example:
+
+- `--maf 0.01` : exlcude snps with maf<0.01
+- `--geno 0.02` :filters out all variants with missing rates exceeding 0.02
+- `--mind 0.02` :filters out all samples with missing rates exceeding 0.02
+- `--hwe 1e-6` : filters out all variants which have HWE exact test p-value below the provided threshold.
+
+---
+
+### LD Pruning
+
+There is often strong `Linkage disequilibrium (LD)` among SNPs, for some analysis we don't need all SNPs and we need to remove the redundant SNPs to avoid bias in genetic estimations.
+For instance `--indep-pairwise 50 5 0.2` to filter out those in strong LD and keep only the independent SNPs.
+ 
+```bash
+    plink \
+    	--bfile ${genotypeFile} \
+    	--maf 0.01 \
+    	--geno 0.02 \
+    	--mind 0.02 \
+    	--hwe 1e-6 \
+    	--indep-pairwise 50 5 0.2 \
+    	--out plink_results
+```
+
+[LD](https://www.cog-genomics.org/plink/1.9/ld#indep)
+
+---
+
+### LD Pruning
+
+This generates two outputs:  `plink_results.prune.in` and `plink_results.prune.out`.
+You can check the PLINK log to verify how many variants were removed based on the filters you applied:
+
+```Bash
+    Total genotyping rate in remaining samples is 0.993916.
+    108837 variants removed due to missing genotype data (--geno).
+```
+
+LD-pruned SNP file.
+    
+```Bash
+    head -n4 plink_results.prune.in
+    1:15774:G:A
+    1:15777:A:G
+    1:77874:G:A
+    1:87360:C:T
+```
+---
+
+### Inbreeding F-coefficient 
+
+Next, we can check the `heterozygosity-F` of samples.
+Usually, we need to exclude individuals with high or low heterozygosity coefficients, which suggests that the sample might be contaminated.
+
+$$F = {{O(HOM) - E(HOM)}\over{ M - E(HOM)}}$$
+    
+- $E(HOM)$ :Expected Homozygous Genotype Count 
+- $O(HOM)$ :Observed Homozygous Genotype Count 
+- M : Number of SNPs
+
+High F may indicate a relatively high level of inbreeding. 
+    
+Low F may suggest the sample DNA was contaminated.
+
+[het](https://www.cog-genomics.org/plink/1.9/basic_stats#ibc)
+
+---
+
+### Inbreeding F-coefficient
+
+Plink F-coefficient
+
+```Bash
+    plink \
+    	--bfile ${genotypeFile} \
+      --extract plink_results.prune.in \
+    	--het \
+    	--out plink_results
+```
+
+Check the output `F`:
+
+    ```Bash
+    head -n3 plink_results.het
+        FID       IID       O(HOM)       E(HOM)        N(NM)            F
+    HG00403   HG00403       180222    1.796e+05       217363      0.01698
+    HG00404   HG00404       180127    1.797e+05       217553      0.01023
+    ```
+
+Commonly samples with heterozygosity F deviating more than 3 standard deviations (SD) from the mean are excluded. Some studies used a fixed value such as +-0.15 or +-0.2.
+
+---
+
+### Inbreeding F-coefficient
+
+Here we use +-0.1 as the $F_{het}$ threshold for convenience. 
+
+Create sample list of individuals with extreme F using `awk`
+
+```Bash
+    # only one sample
+    awk 'NR>1 && $6>0.1 || $6<-0.1 {print $1,$2}' plink_results.het > high_het.sample
+```
+
+---
+
+### Sample & SNP filtering
+
+Sometimes we will use only a subset of samples or SNPs included the original dataset. 
+In this case, we can use `--extract` or `--exclude` to select or exclude SNPs from analysis, `--keep` or `--remove` to select or exclude samples.
+
+For  `--keep` or `--remove`, the input is the filename of a sample FID and IID file.
+For `--extract` or `--exclude`, the input is the filename of an SNP list file.
+
+```bash
+head -n4 plink_results.prune.in
+1:15774:G:A
+1:15777:A:G
+1:77874:G:A
+1:87360:C:T
+```
+
+---
+
+### Data Management (make-bed/recode)
+
+By far the input data we use is in binary form `.bed`, but sometimes we may want the matrix version.
+To convert the formats, we can run:
+
+Convert PLINK formats
+
+```Bash
+    #extract the 1000 samples with the pruned SNPs, and make a bed file.
+    plink \
+    	--bfile ${genotypeFile} \
+    	--extract plink_results.prune.in \
+    	--make-bed \
+    	--out plink_1000_pruned
+    
+    #convert the bed/bim/fam to ped/map
+    plink \
+            --bfile plink_1000_pruned \
+            --recode \
+            --out plink_1000_pruned
+```
+
+---
+
+## Apply all the filters to obtain a clean dataset
+
+We can then apply all the filters in one-run and remove samples with high $F_{het}$ to get a clean dataset.
+
+```Bash
+plink \
+        --bfile ${genotypeFile} \
+        --maf 0.01 \
+        --geno 0.02 \
+        --mind 0.02 \
+        --hwe 1e-6 \
+        --remove high_het.sample \
+        --keep-allele-order \
+        --make-bed \
+        --out sample_data.clean
+```
+
+---
+
+## Other common QC steps not included here
+
+- check-sex: compares sex assignments in the input dataset with those imputed from X chromosome inbreeding coefficients[https://www.cog-genomics.org/plink/1.9/basic_stats#check_sex](https://www.cog-genomics.org/plink/1.9/basic_stats#check_sex)
+- case/control nonrandom missingness test:  detect platform/batch differences between case and control genotype data by performing Fisher's exact test on case/control missing call counts at each variant. [https://www.cog-genomics.org/plink/1.9/assoc#test_missing](https://www.cog-genomics.org/plink/1.9/assoc#test_missing)
 
 ---
 
 ## Principal Component Analysis (PCA)
 
-- Concept of PCA
-- Application in ancestry determination
-- Plotting PCA results
-- Interpreting PCA plots to infer ancestry
+PCA aims to find the **orthogonal directions of maximum variance** and project the data onto a new subspace with equal or fewer dimensions than the original one.
+
+::: {.notes}
+Simply speaking, **GRM (genetic relationship matrix; covariance matrix)** is first estimated and then PCA is applied to this matrix to generate **eigenvectors** and **eigenvalues**. Finally, the $k$ eigenvectors with the largest eigenvalues are used to transform the genotypes to a new feature subspace.
+:::
+
+![](images/pca.png){width=80%}
+
+::: aside
+[ref.](https://doi.org/10.1016%2Fj.ajhg.2010.11.011)
+:::
 
 ---
 
-## Ancestry Determination
+## Example PCA
 
-- Why is ancestry important?
-- Challenges in determining ancestry
-- Using PCA for ancestry inference
-- Limitations of ancestry determination methods
+::: {.top-right}
+[link](https://en.wikipedia.org/wiki/Principal_component_analysis)
+:::
+
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show the code"
+
+import numpy as np
+import plotly
+
+# some random data
+cov = np.array([[6, -3], [-3, 3.5]])
+pts = np.random.multivariate_normal([0, 0], cov, size=800)
+
+import numpy as np
+import plotly.graph_objs as go
+from sklearn.decomposition import PCA
+
+cov = np.array([[6, -3], [-3, 3.5]])
+pts = np.random.multivariate_normal([0, 0], cov, size=800)
+
+# Perform PCA
+pca = PCA(n_components=2)
+pca_result = pca.fit_transform(pts)
+
+# Create a Plotly scatter plot
+trace = go.Scatter(
+    x=pca_result[:, 0],
+    y=pca_result[:, 1],
+    mode='markers',
+    marker=dict(
+        size=8,
+        color='blue',
+        opacity=0.5
+    )
+)
+
+layout = go.Layout(
+    title='',
+    xaxis=dict(title='Principal Component 1 (PC1)'),
+    yaxis=dict(title='Principal Component 2 (PC2)'),
+    autosize=False,
+    width=1000,
+    height=550,
+)
+
+fig = go.Figure(data=[trace], layout=layout)
+fig
+```
+
+::: {.notes}
+Mention that Wikipedia for math and in particular statistics is fine to use.
+:::
 
 ---
 
-## Association Testing
+## Population Structure
 
-- Basics of association testing
-- Common statistical tests used
-- Correcting for population structure
-- Challenges and considerations in association testing
+Exclude SNPs in high-LD or HLA regions
+For PCA, we first exclude SNPs in high-LD or HLA regions from the genotype data.
+Copy the list of high-LD or HLA regions in Genome build version to a text file `high-ld.txt`. 
 
----
+[High-LD-regions](https://genome.sph.umich.edu/wiki/Regions_of_high_LD)
 
-## QC + PCA Workflow
+High LD regions of hg19
 
-- Illustrative workflow diagram
-- Integration of QC and PCA
-- Importance of sequential analysis steps
-- Examples of QC and PCA results
-
----
-
-## Case Study: Ancestry Inference
-
-- Real-world example
-- Application of QC and PCA
-- Inference of ancestry using GWAS data
-- Interpretation of ancestry results
+```Bash
+    head -n 4 /scratch/bioinf/gd5302/data/p1/03_pca/high-ld.txt
+    1	48000000	52000000	highld
+    2	86000000	100500000	highld
+    2	134500000	138000000	highld
+    2	183000000	190000000	highld
+```
 
 ---
 
-## Case Study: Association Testing
+### Population Structure - high-LD
 
-- Application of association testing
-- Accounting for population structure
-- Identifying genetic variants associated with traits
-- Implications of association testing results
+Next, use `high-ld.txt` to extract all SNPs which are located in the regions described in the file using the code as follows:
+Create a list of SNPs in the regions specified in `high-ld.txt`
+
+```Bash
+    plinkFile="../02_data_qc/sample_data.clean"
+    
+    plink \
+    	--bfile ${plinkFile} \
+    	--make-set high-ld-hg19.txt \
+    	--write-set \
+    	--out hild
+```
+
+All SNPs in the regions will be extracted to `hild.set`.
+
+    ```Bash
+    head -n4 hild.set
+    highld
+    1:48000156:C:G
+    1:48002096:C:G
+    1:48003081:T:C
+    ```
+
+Now we can exclude these SNPs using `--exclude hild.set`.
 
 ---
 
-## Conclusion
+### PCA steps - A
 
-- Summary of key points
-- Importance of QC, PCA, and ancestry determination
-- Future directions in GWAS analysis
-- Q&A session
+PCA analysis
+
+```Bash
+    plinkFile="" #your own path
+    outPrefix="plink_results"
+    threadnum=2
+    hildset = hild.set 
+    
+    # LD-pruning, excluding high-LD and HLA regions
+    plink2 \
+          --bfile ${plinkFile} \
+          --maf 0.01 \
+    	    --threads ${threadnum} \
+    	    --exclude ${hildset} \ 
+    	    --indep-pairwise 500 50 0.2 \
+          --out ${outPrefix}
+    
+    # Remove related samples using king-cuttoff
+    plink2 \
+          --bfile ${plinkFile} \
+    	    --extract ${outPrefix}.prune.in \
+          --king-cutoff 0.0884 \
+    	    --threads ${threadnum} \
+          --out ${outPrefix}
+```
+---
+
+### PCA steps - B
+
+```Bash
+    # PCA after pruning and removing related samples
+    plink2 \
+          --bfile ${plinkFile} \
+          --keep ${outPrefix}.king.cutoff.in.id \
+    	    --extract ${outPrefix}.prune.in \
+    	    --freq counts \
+    	    --threads ${threadnum} \
+          --pca approx allele-wts 10 \     
+          --out ${outPrefix}
+    
+    # Projection (related and unrelated samples)
+    plink2 \
+          --bfile ${plinkFile} \
+    	    --threads ${threadnum} \
+          --read-freq ${outPrefix}.acount \
+    	    --score ${outPrefix}.eigenvec.allele 2 5 header-read no-mean-imputation variance-standardize \
+          --score-col-nums 6-15 \
+          --out ${outPrefix}_projected
+```
+
+----
+
+## Plot the PCA
+
+You can now create scatterplots of the PCs using a Python script `03_pca/plot_pca.py` or a Jupyter notebook.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+pca = pd.read_table("../03_pca/plink_results_projected.sscore", sep="\t")
+ped = pd.read_table("../01_dataset/integrated_call_samples_v3.20130502.ALL.panel", sep="\t")
+pcaped = pd.merge(pca, ped, right_on="sample", left_on="IID", how="inner")
+plt.figure(figsize=(10, 10))
+sns.scatterplot(data=pcaped, x="PC1_AVG", y="PC2_AVG", hue="pop", s=50)
+plt.savefig("pca_plot.pdf")
+```
+
+---
+
+## References
+
+- Price, A., Patterson, N., Plenge, R. et al. (2006) Principal components analysis corrects for stratification in genome-wide association studies. Nat Genet 38, 904–909.
+- Price, A. L., (2008). Long-range LD can confound genome scans in admixed populations. American journal of human genetics, 83(1), 132–139.
+- Manichaikul, A., Mychaleckyj, J. C., Rich, S. S., Daly, K., Sale, M., & Chen, W. M. (2010). Robust relationship inference in genome-wide association studies. Bioinformatics, 26(22), 2867-2873.
 
 ---
 

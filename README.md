@@ -2,4 +2,21 @@
 
 🔗 https://maff1/gd5302/
 
-Testing rendering and layout.
+
+Add ref:
+https://choishingwan.github.io/PRS-Tutorial/plink/
+https://github.com/Cloufield/GWASTutorial
+h2: https://nealelab.github.io/UKBB_ldsc/h2_browser.html
+
+
+Rendering with quarto
+
+Specific file:
+```bash
+quarto render specificFile.qmd
+```
+
+All files:
+```bash
+quarto render
+```

@@ -11,8 +11,8 @@ This page contains an outline of the topics, content, and coursework for the Pra
 |:------:|--------|--------|:------:|:------:|:------:|
 |7|Fri, Mar 8 - 12-2PM|Practice 0 - HPC + Shell basics (Bash) + SLURM |[🖥️](/slides/pra-0.html "Pra slides"){aria-label="Pratice 0 slides"}|[🖥️](/cheatsheets/cheatsheet-bash.html "Bash cheatsheet"){aria-label="Bash cheatsheet"}, [🖥️](/cheatsheets/cheatsheet-slurm.html "SLURM cheatsheet"){aria-label="SLURM cheatsheet"}|
 |8|Wed, Mar 13 - 9-10AM|Lecture 0 - Genome-wide Association Studies (GWAS) and Disease|[🖥️](/slides/lec-0.html "Lec slides"){aria-label="Lecture 0 slides"}| 
-|8|Fri, Mar 15 - 12-2PM|Practice 1 - GWAS QC + PCA + Association Testing|[🖥️](/slides/pra-1.html "Pra slides"){aria-label="Pratice 1 slides"}|
-|9|Wed, Mar 20 - 9-10AM|Lecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)|[🖥️](/slides/lec-1.html "Lec slides"){aria-label="Lecture 1 slides"}|
-|9|Fri, Mar 22 - 12-2PM|Practice 2 - PRS + Gradient Boosting Machines (GBM)|[🖥️](/slides/pra-2.html "Pra slides"){aria-label="Practice 2 slides"}|
-|||Coursework|||[🖥️](/slides/lab-0.html "Coursework"){aria-label="Coursework description"}|
+|8|Fri, Mar 15 - 12-2PM|Practice 1 - GWAS QC + PCA|[🖥️](/slides/pra-1.html "Pra slides"){aria-label="Pratice 1 slides"}|
+|9|Wed, Mar 20 - 9-10AM|Lecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)|[🖥️](/slides/lec-1.pdf "Lec slides"){aria-label="Lecture 1 slides"}|
+|9|Fri, Mar 22 - 12-2PM|Practice 2 - PRS + Gradient Boosting Machines (GBM) + coursework|[🖥️](/slides/pra-2.html "Pra slides"){aria-label="Practice 2 slides"}|
+|||Coursework|||[🖥️](/task.html "Coursework"){aria-label="Coursework description"}|
 :::

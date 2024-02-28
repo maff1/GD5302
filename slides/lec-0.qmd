@@ -1,7 +1,7 @@
 ---
 title: "Genome-wide Association Studies (GWAS) and Disease"
 subtitle: ""
-footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+footer:  "[maff1.github.io/gd5302](https://maff1.io/gd5302/)"
 logo: "images/logo.png"
 format: 
   revealjs: 
@@ -14,52 +14,170 @@ execute:
 
 ## Introduction
 
+::: {.notes}
+Overview of WGS analysis. WGS data were generated using identical
+protocols at the same facility and all WGS data were jointly processed and
+analyzed. The schizophrenia cases also had GWA SNP array and exomesequencing data 
+for comparison for the purpose of quality assessment. We
+started with 1165 schizophrenia cases and 942 ancestry-matched population
+controls. After QC, 1162 cases and 936 controls remained. Variant
+annotation focused on empirically determined annotation methods.
 - What are GWAS?
-- Importance of GWAS in disease research
 - Key concepts: SNPs, genetic variants, allele frequencies
+:::
+
+![](images/lec-0-wgs-snp.png){width="125%"}
+[ref.](https://doi.org/10.1038/s41467-020-15707-w)
 
 ---
 
 ## Methodology
+
+::: {.notes}
+Common steps in a GWAS study (1-4).
+
+a | Data can be gathered from study cohorts or obtained from biobanks and repositories containing genetic and phenotypic information. It's imperative to address confounders and avoid recruitment biases like collider bias.
+
+b | Genotypic data can be acquired through microarrays for common variants or next-generation sequencing methods like whole-genome sequencing (WGS) or whole-exome sequencing (WES).
+
+c | Quality control involves wet-lab steps such as genotype calling and DNA switches, and dry-lab processes like filtering out poor single-nucleotide polymorphisms (SNPs) and individuals, detecting population strata, and computing principal components. The figure illustrates clustering based on genetic substrata.
+
+d | Phasing genotypic data and imputing untyped genotypes rely on reference populations from repositories such as the 1000 Genomes Project or TopMed. The example demonstrates imputation of genotypes like SNP1 and SNP3 based on directly assayed genotypes of other SNPs.
+
+e | Genetic association tests are conducted for each variant, utilizing appropriate models (e.g., additive, non-additive, linear, or logistic regression). Corrections for confounders and management of multiple testing are essential, with inspection for unusual patterns and generation of summary statistics.
+
+f | Results from multiple smaller cohorts are merged using standardized statistical pipelines.
+
+g | Results are replicated either internally or externally in an independent cohort, necessitating ancestral matching and absence of shared individuals or family members between cohorts.
+
+h | In silico analysis of genome-wide association studies (GWAS) involves utilizing external resources for tasks like fine-mapping, SNP to gene mapping, gene to function mapping, pathway analysis, genetic correlation analysis, Mendelian randomization, and polygenic risk prediction. Experimental validation or testing in relevant human models follows GWAS.
+:::
+
+:::: {.columns}
+
+::: {.column width="25%"}
 
 1. Study design
 2. Data collection
 3. Statistical analysis
 4. Replication and validation
 
+:::
+
+::: {.column width="70%"}
+
+![](images/lec-0-gwas-main-steps.webp){width=85%}
+[ref.](https://www.nature.com/articles/s43586-021-00056-9)
+
+:::
+
+::::
+
 ---
 
-## Case Study: Diabetes
+### GWAS results visualisation
 
-- Brief overview of diabetes
-- GWAS findings related to diabetes
-- Implications for understanding disease mechanisms
+:::{.notes}
+a | Manhattan plot illustrating the significance of each variant's correlation with a phenotype (specifically, body mass index in this context). Each point represents a single-nucleotide polymorphism (SNP), arranged along the x-axis based on their genomic locations. The y-axis denotes the strength of association, measured as -log10 transformed P values. A red line indicates the threshold for genome-wide significance (P < 5 × 10–8).
+
+b | Quantile–quantile plot demonstrating the distribution of expected P values under a null hypothesis of no significance versus observed P values. Expected -log10 transformed P values (x-axis) for each association are plotted against observed values (y-axis) to visualize the enrichment of association signal. Deviation from the null hypothesis expectation (depicted by the red line) suggests the presence of genuine causal effects or insufficiently adjusted population stratification. For genuine causal effects, the deviation is expected predominantly on the right side of the plot, while population stratification causes the deviation to commence closer to the origin. In this instance, due to the extreme polygenicity of BMI and the high power of the genome-wide association study (GWAS), the deviation may begin near the origin, complicating the visual identification of stratification. LDSC analysis can be employed to determine whether this inflation is attributed to bias or polygenicity.
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Manhattan plot
+![](images/lec-0-manhplot.png){width=100%}
+
+:::
+
+::: {.column width="50%"}
+
+Quantile–quantile plot
+![](images/lec-0-qqplot.png){width=100%}
+
+:::
+
+::::
+
+[ref.](https://www.nature.com/articles/s43586-021-00056-9)
+
+---
+
+## Statistical Power
+
+```{r, powerCalculator_QTL}
+#| echo: true
+#| label: fig-power
+#| fig-cap: "Power calculation at $p-value=1e^{-5}$ for quantitative traits across a range of sample sizes (N) and heritability ($h^2$)"
+#| code-fold: true
+#| code-summary: "Show the code"
+
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+source("../scripts/L0/power_calculator.R")
+
+set.seed(2024)
+n=seq(0, 5000, by=100)
+qsq=(1:10)/100
+pval=1E-5
+pow = power_n_hsq( n=n, qsq=qsq, pval=pval )
+powm = melt(pow)
+colnames(powm) <- c("x","y","Power")
+
+cols=brewer.pal(9,"YlOrRd")
+
+p <- ggplot(data=powm, aes(x=x,y=y,z=Power)) + 
+  geom_raster(aes(fill=Power),interpolate=TRUE) + 
+  scale_fill_gradientn(colours=cols) + 
+  geom_vline(xintercept=c(500, 1709), linetype="longdash") +
+  geom_hline(yintercept=c(0.025, 0.1), linetype="longdash") +
+  scale_x_continuous(breaks = seq(min(powm$x), max(powm$x), by = 500)) +
+  theme_classic() + 
+  xlab("sample size (N)") + 
+  ylab(expression(heritability~h^2))
+print( p )
+```
 
 ---
 
 ## Case Study: Cancer
 
-- Overview of cancer
-- GWAS findings related to cancer susceptibility
-- Potential applications in personalized medicine
+::: {.notes}
+Regional plots of the novel loci and forest plots of the lead loci variants identified in the all-cancer meta-analysis. Purple diamond symbols in the regional plots represent the lead variants of the loci. In the forest plots, dots indicate the odds ratios of the variant for each cancer and whiskers represent 95% confidence intervals.
+:::
+
+![](images/lec-0-cancer.webp){width="80%"}
+[ref.](https://doi.org/10.1038/s41467-023-39136-7)
 
 ---
 
-## Challenges and Limitations
+## Population Structure
 
-- Population stratification
-- Statistical power
-- Replication issues
-- Interpretation of results
+PCA clustering Principal Component Analysis (PCA) plot of 20 populations from 1000 Genomes Project.
+
+![](images/lec-0-pop.webp){width="60%"}
+[ref.](https://doi.org/10.1186/s12859-019-2680-1)
 
 ---
 
-## Future Directions
+## Ethical considerations
 
-- Multi-omics integration
-- Machine learning approaches
-- Pharmacogenomics
-- Ethical considerations
+>“genetic data means personal data relating to the inherited or acquired genetic characteristics of a natural person which give unique information about the physiology or the health of that natural person and which result, in particular, from an analysis of a biological sample from the natural person in question”[^1].
+
+::: {.callout-important}
+genetic information is `personal data` and special category genetic data for the purposes of the `UK GDPR`
+:::
+[^1]: UK GDPR defines genetic data in Article 4(13)
+
+---
+
+## Ethical considerations
+The 23andMe media case
+
+![](images/lec-0-23andme.png){width=100%}
 
 ---
 
@@ -72,5 +190,3 @@ execute:
 ---
 
 ## Questions?
-
----

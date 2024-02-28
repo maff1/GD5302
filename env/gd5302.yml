@@ -1,0 +1,23 @@
+name: gd5302
+channels:
+  - conda-forge
+  - biconda
+  - anaconda
+  - r
+  - defaults
+dependencies:
+  - gcta=1.94.1
+  - plink=1.90b6.21
+  - plink2=2.00a5
+  - ucsc-liftover=447
+  - r-data.table
+  - r-reshape2
+  - r-ggplot2
+  - r-rcolorbrewer
+  - bcftools
+  - pandas
+  - matplotlib
+  - seaborn
+  - plotly
+  - jupyter
+

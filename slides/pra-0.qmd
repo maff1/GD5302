@@ -1,7 +1,7 @@
 ---
 title: "HPC + Shell Basics (Bash) + SLURM"
-subtitle: "setting-up"
-footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+subtitle: ""
+footer:  "[maff1.github.io/gd5302](https://maff1.io/gd5302/)"
 logo: "images/logo.png"
 format: 
   revealjs: 
@@ -12,67 +12,281 @@ execute:
   freeze: auto
 ---
 
-## High-Performance Computing (HPC)
+### High-Performance Computing (HPC)
 
----
+![](images/hpc.webp){width=55% fig-align="left"}
 
-### Introduction to HPC
-
-- What is HPC?
-- Importance of HPC in scientific research
+- Importance of **HPC** in scientific research
 - Key components of HPC systems
+  - resource managing/ job scheduler: `SLURM`, `Sun Grid Engine`, `Torque`
 
 ---
 
-### Shell Basics (bash)
+### Shell Basics
 
-#### Introduction to Shell
+::: {.notes}
+some distros default to specific Shells (i.e. CentOS --> Tcsh)
+Shells can be changed within a distro
+:::
 
 - What is a shell?
-- Types of shells
-- Basic shell commands
 
-#### Navigation and File Operations
+![](images/distros.png){width=70% fig-align="left"}
+
+- Types of shells (`Bash`, `Zsh`, `Tcsh`)
+```Bash 
+echo $0
+```
+- Basic `Bash` commands
+[🖥️](/cheatsheets/cheatsheet-bash.html)
+
+---
+
+#### Navigation & File Operations
 
 - Navigating the file system
+```Bash
+pwd
+cd directory
+cd ..
+```
 - Creating, copying, moving, and deleting files and directories
+```Bash
+mkdir directory
+cp directory ../anotherLocal
+mv directory ../anotherLocal
+rm -f fileToRemove.txt
+rm -rf directory
+```
 - Listing files and directories
+```Bash
+ls directory
+ls directory/*txt
+```
+
+---
 
 #### Shell Scripting Basics
 
-- Writing and executing shell scripts
-- Variables and data types
-- Control structures (if statements, loops)
+- Writing and executing `Bash` scripts
+```Bash 
+#!/bin/bash
+chmod +x someScript.sh
+./someScript.sh
+```
+Assigning to a variable
+```Bash
+name="John"
+age=25
+current_date=$(date)
+```
+
+Using variables in a command
+```Bash
+echo "Hello, $name! You are $age years old."
+echo "Current date: $current_date"
+```
+
+- Basic `Bash` commands: `cheatsheet`
+[🖥️](/cheatsheets/cheatsheet-bash.html)
 
 ---
 
-### SLURM (Simple Linux Utility for Resource Management)
+#### Shell Scripting Basics
 
-#### Introduction to SLURM
+Iterate over numbers from 1 to 5
+```Bash
+for i in {1..5}
+do
+    echo "Number: $i"
+done
+```
+
+Iterate over a list of items
+```Bash
+fruits="apple orange banana grape"
+for fruit in $fruits
+do
+    echo "Fruit: $fruit"
+done
+```
+
+- Basic `Bash` commands: `cheatsheet`
+[🖥️](/cheatsheets/cheatsheet-bash.html)
+
+---
+
+## SSH
+
+**SSH** stands for **Secure Shell Protocol**, which enables you to connect to remote server safely.
+
+![](images/ssh.png)
+
+---
+
+### Keys
+
+```Bash
+ssh-keygen -t rsa -b 4096
+```
+You will get two keys, a public one and a private one.
+
+- public key  :  `~/.ssh/id_rsa.pub`
+- private key :  `~/.ssh/id_rsa`
+
+::: {.callout-warning}
+Don't share your private key with others
+:::  
+
+add you local public key to `~/.ssh/authorized_keys` on host server
+
+---
+
+### Login & File Transfers
+
+Login to remote server
+```Bash
+ssh <username>@<host>
+```
+
+Donwload from remote to local
+```Bash
+scp <username>@<host>:remote_path local_path
+```
+
+Upload from local to remote host
+```Bash
+scp local_path <username>@<host>:remote_path
+```
+
+::: {.callout-tip}
+    `-r` : copy recursively. This option is needed when you want to transfer an entire directory. 
+:::
+
+---
+
+### SSH Tunneling
+
+> In this forwarding type, the SSH client listens on a given port and tunnels any connection to that port to the specified port on the remote SSH server, which then connects to a port on the destination machine. `-L` : Local port forwarding
+
+```Bash
+ssh -L [local_IP:]local_PORT:destination:destination_PORT <username>@<host>
+```
+
+---
+
+#### SLURM
+
+::: {.notes}
+SLURM (Simple Linux Utility for Resource Management)
 
 - What is SLURM?
 - Purpose and features
 - SLURM architecture
+:::
 
-#### SLURM Basic Commands
+![](images/slurm-cluster.png){width=80%}
+[ref.](https://images.app.goo.gl/wu2JRgqrkx6g31LS6)
 
+---
+
+### SLURM Basic Commands
+
+:::: {.columns}
+
+::: {.column width="40%"}
 - Submitting jobs
+```Bash
+sbatch yourScript.sh
+```
 - Monitoring jobs
-- Managing job queues
+```Bash
+squeue -u $USER
+```
+:::
+
+::: {.column width="40%"}
+- Partitions and nodes
+```Bash
+sinfo
+```
 - Cancelling jobs
+```Bash
+scancel jobid
+```
+:::
 
-#### Advanced SLURM Features
+::::
 
-- Job arrays
-- Job dependencies
-- Resource specifications
-- Advanced scheduling options
+::: {.callout-warning}
+Don't submit jobs to login node
+::: 
+
+----
+
+### SLURM Basic Commands
+
+- Job submission
+```Bash
+#!/bin/bash
+
+#SBATCH --job-name="yourScript"
+#SBATCH --mail-user=user@st-andrews.ac.uk
+#SBATCH --mail-type=END,FAIL
+#SBATCH --export=ALL
+#SBATCH --nodes=1
+#SBATCH --mem=48G
+#SBATCH --cpus-per-task 12
+#SBATCH --partition=short
+#SBATCH --output=output_%j.log
+#SBATCH --error=error_%j.log
+
+source activate toolCondaEnv
+yourScript.sh
+```
+
+Slurm cheatsheet
+[🖥️](/cheatsheets/cheatsheet-slurm.qmd)
+
+---
+
+#### Conda Environments
+
+>Conda environments are isolated environments in which you can install packages and manage dependencies separately from each other and from the system's Python installation.
+
+:::: {.columns}
+
+::: {.column width="40%"}
+create new environment
+```Python
+conda create --name myenv
+```
+activate environment
+```Python
+conda activate myenv
+```
+:::
+
+::: {.column width="50%"}
+install package with default channel
+```Python
+conda install package_name
+```
+
+::: {.callout-tip}
+`Mamba` environments are similar to `Conda` environments, but faster.
+:::
+
+:::
+
+::::
 
 ---
 
 ### Conclusion
 
 - Recap of key points
-- Importance of HPC, shell basics, and SLURM in computational research
+- Importance of **HPC**, **Shell**, and **SLURM** in Bioinformatics
 - Further resources for learning
-
+   - [🖥️ Slurm cheatsheet](/cheatsheets/cheatsheet-slurm.qmd)
+   - [🖥️ Bash cheatsheet](/cheatsheets/cheatsheet-bash.html)

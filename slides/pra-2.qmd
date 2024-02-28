@@ -1,7 +1,7 @@
 ---
 title: "PRS + Gradient Boosting Machines (GBM)"
 subtitle: ""
-footer:  "[maff1.github.io/website](https://maff1.io/website/)"
+footer:  "[maff1.github.io/gd5302](https://maff1.io/gd5302/)"
 logo: "images/logo.png"
 format: 
   revealjs: 

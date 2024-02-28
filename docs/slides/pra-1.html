@@ -10,7 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>GD5302 - Health Data Science Practice - GWAS QC + PCA + Association Testing</title>
+  <title>GD5302 - Health Data Science Practice - GWAS QC + PCA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -318,7 +383,26 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="GD5302 - Health Data Science Practice - GWAS QC + PCA + Association Testing">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script type="text/javascript">
+  window.PlotlyConfig = {MathJaxConfig: 'local'};
+  if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+  if (typeof require !== 'undefined') {
+  require.undef("plotly");
+  requirejs.config({
+      paths: {
+          'plotly': ['https://cdn.plot.ly/plotly-2.29.1.min']
+      }
+  });
+  require(['plotly'], function(Plotly) {
+      window._Plotly = Plotly;
+  });
+  }
+  </script>
+
+<meta property="og:title" content="GD5302 - Health Data Science Practice - GWAS QC + PCA">
 <meta property="og:description" content="">
 <meta property="og:site-name" content="GD5302 - Health Data Science Practice">
 </head>
@@ -327,91 +411,542 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">GWAS QC + PCA + Association Testing</h1>
+  <h1 class="title">GWAS QC + PCA</h1>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section id="introduction" class="slide level2">
-<h2>Introduction</h2>
+<section class="slide level2">
+
+<h3 id="plink-basics">PLINK basics</h3>
+<p>In this practical, we will learn the basics of genotype data QC using <code>PLINK</code>, which is one of the most commonly used software in complex trait genomics. <a href="https://www.cog-genomics.org/plink/1.9/credits">PLINK1.9</a> &amp; <a href="https://www.cog-genomics.org/plink/2.0/credits">PLINK2</a></p>
+<h3 id="conda-env">Conda Env</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="bu">source</span> gd5302</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="genotype-data">Genotype Data</h3>
+<p>Next, we need to download the sample genotype data. The way to create the sample data is described [here].(https://cloufield.github.io/GWASTutorial/01_Dataset/) This dataset contains 504 EAS individuals from 1000 Genome Project Phase 3 with ~1M variants.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>    <span class="bu">cd</span> /scratch/bioinf/gd5302/data/p1/01_dataset</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="fu">ls</span> <span class="at">-al</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should see three PLINK files</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>    <span class="ex">-rw-r--r--.</span> 1 maff1 bioinf 155624619 Dec 26 05:59 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bed</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="ex">-rw-r--r--.</span> 1 maff1 bioinf  41100120 Dec 26 05:59 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bim</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="ex">-rw-r--r--.</span> 1 maff1 bioinf     12600 Dec 26 06:00 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.fam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Check the <code>bim</code> file</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>    <span class="fu">head</span> <span class="at">-n3</span> 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bim</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="ex">1</span>       1:14930:A:G     0       14930   G       A</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="ex">1</span>       1:15774:G:A     0       15774   A       G</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="ex">1</span>       1:15777:A:G     0       15777   G       A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check the <code>fam</code> file</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>    <span class="fu">head</span> <span class="at">-n3</span> 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.fam</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="ex">HG00403</span> HG00403 0 0 0 <span class="at">-9</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="ex">HG00404</span> HG00404 0 0 0 <span class="at">-9</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="ex">HG00406</span> HG00406 0 0 0 <span class="at">-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="qc-with-plink" class="slide level2">
+<h2>QC with PLINK</h2>
+<ol type="1">
+<li>Calculate missing rate/ call rate</li>
+<li>Calculate allele Frequency</li>
+<li>Conduct Hardy-Weinberg equilibrium exact test</li>
+<li>Conduct LD-Pruning</li>
+<li>Calculate inbreeding F-coefficient</li>
+<li>Conduct sample &amp; SNP filtering</li>
+<li>Data management (make-bed/recode)</li>
+<li>PCA Scripts for this practical are available in <code>/scratch/bioinf/gd5302/data/p1/01_dataset</code></li>
+</ol>
+</section>
+<section class="slide level2">
+
+<h3 id="missing-rate-call-rate">Missing rate (call rate)</h3>
+<p>The first thing we want to know is the missing rate of our data. Usually, we need to check the missing rate of samples and SNPs to decide a threshold to exclude low-quality samples and SNPs.</p>
 <ul>
-<li>Brief overview of GWAS</li>
-<li>Importance of quality control (QC)</li>
-<li>Need for ancestry determination</li>
-<li>Role of principal component analysis (PCA)</li>
+<li><strong>Sample missing rate</strong>: the proportion of missing values for an individual across all SNPs.</li>
+<li><strong>SNP missing rate</strong>: the proportion of missing values for a SNP across all samples.</li>
 </ul>
 </section>
-<section id="gwas-quality-control-qc" class="slide level2">
-<h2>GWAS Quality Control (QC)</h2>
+<section class="slide level2">
+
+<h3 id="missing-rate-call-rate-1">Missing rate (call rate)</h3>
+<p>Suppose we have N samples and M SNPs for each sample.</p>
+<p>For sample <span class="math inline">\(j\)</span> :</p>
+<p><span class="math display">\[Sample\ Missing\ Rate_{j} = {{N_{missing\ SNPs\ for\ j}}\over{M}} = 1 - Call\ Rate_{sample, j}\]</span></p>
+<p>For SNP <span class="math inline">\(i\)</span> :</p>
+<p><span class="math display">\[SNP\ Missing\ Rate_{i} = {{N_{missing\ samples\ at\ i}}\over{N}} = 1 - Call\ Rate_{SNP, i}\]</span></p>
+<p>The input is PLINK bed/bim/fam file. Use prefix to <code>--bfile</code> option.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="missing-rate-call-rate-2">Missing rate (call rate)</h3>
+<p>To calculate the missing rate, we need the flag <code>--missing</code>, which tells PLINK to calculate the missing rate in the dataset specified by <code>--bfile</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a>    <span class="bu">cd</span> /scratch/bioinf/gd5302/data/p1/01_dataset/02_data_qc</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    </span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>        <span class="at">--missing</span> <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>        <span class="at">--out</span> plink_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>This will output two files <code>plink_results.imiss</code> and <code>plink_results.lmiss</code>, which contain the missing rate information for samples and SNPs respectively. Take a look at the <code>.imiss</code> file. The <code>F_MISS</code> shows the missing rate for samples.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">head</span> <span class="at">-n4</span> plink_results.imiss</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="ex">FID</span>       IID MISS_PHENO   N_MISS   N_GENO   F_MISS</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">HG00403</span>   HG00403          Y    10020  1235116 0.008113</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="ex">HG00404</span>   HG00404          Y     9192  1235116 0.007442</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">HG00406</span>   HG00406          Y    15751  1235116  0.01275</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">head</span> <span class="at">-n4</span> plink_results.lmiss</span>
+<span id="cb8-2"><a href="#cb8-2"></a> <span class="ex">CHR</span>              SNP   N_MISS   N_GENO   F_MISS</span>
+<span id="cb8-3"><a href="#cb8-3"></a>   <span class="ex">1</span>      1:14930:A:G        2      504 0.003968</span>
+<span id="cb8-4"><a href="#cb8-4"></a>   <span class="ex">1</span>      1:15774:G:A        3      504 0.005952</span>
+<span id="cb8-5"><a href="#cb8-5"></a>   <span class="ex">1</span>      1:15777:A:G        3      504 0.005952</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="allele-frequency">Allele Frequency</h3>
+<p>One of the most important statistics in GWAS/ SNPs is their frequency in a certain population. Variants can be categorized into three groups based on their <code>Minor Allele Frequency</code> (MAF):</p>
+<ol type="1">
+<li><strong>Common variants</strong> : MAF&gt;=0.05</li>
+<li><strong>Low-frequency variants</strong> : 0.01&lt;=MAF&lt;0.05</li>
+<li><strong>Rare variants</strong> : MAF&lt;0.01</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<h3 id="allele-frequency-1">Allele Frequency</h3>
+<p>Suppose the reference allele (REF) is A and the alternative allele(ALT) is B for a certain SNP. The posible genotypes are AA, AB and BB. In a population of N samples (2N alleles), <span class="math inline">\(N = N_{AA} + 2 \times N_{AB} + N_{BB}\)</span> :</p>
 <ul>
-<li>Importance of QC</li>
-<li>Data preprocessing steps</li>
-<li>Identifying and removing low-quality samples and variants</li>
-<li>Tools and techniques used for QC</li>
+<li>the number of A alleles: <span class="math inline">\(N_A = 2 \times N_{AA} + N_{AB}\)</span></li>
+<li>the number of B alleles: <span class="math inline">\(N_B = 2 \times N_{BB} + N_{AB}\)</span></li>
+</ul>
+<p>So we can calculate the allele frequency:</p>
+<ul>
+<li>Reference Allele Frequency : <span class="math inline">\(AF_{REF}= {{N_A}\over{N_A + N_B}}\)</span></li>
+<li>Alternative Allele Frequency : <span class="math inline">\(AF_{ALT}= {{N_B}\over{N_A + N_B}}\)</span></li>
+</ul>
+<p>The MAF for this SNP in this specific population is defined as:</p>
+<p><span class="math inline">\(MAF = min( AF_{REF}, AF_{ALT} )\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="allele-frequency-2">Allele Frequency</h3>
+<p>Calculate MAF of variants with <code>PLINK1.9</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>        <span class="at">--freq</span> <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>        <span class="at">--out</span> plink_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>    <span class="fu">head</span> <span class="at">-n4</span> plink_results.frq</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    <span class="ex">CHR</span>              SNP   A1   A2          MAF  NCHROBS</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="ex">1</span>      1:14930:A:G    G    A       0.4133     1004</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="ex">1</span>      1:15774:G:A    A    G      0.02794     1002</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="ex">1</span>      1:15777:A:G    G    A      0.07385     1002</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="allele-frequency-3">Allele Frequency</h3>
+<p>Calculate MAF of variants with <code>PLINK2</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>    <span class="ex">plink2</span> <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>            <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>            <span class="at">--freq</span> <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>            <span class="at">--out</span> plink_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>    <span class="co"># results from plink2</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="fu">head</span> <span class="at">-n4</span> plink_results.afreq</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="co">#CHROM  ID      REF     ALT     PROVISIONAL_REF?        ALT_FREQS       OBS_CT</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="ex">1</span>       1:14930:A:G     A       G       Y       0.413347        1004</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="ex">1</span>       1:15774:G:A     G       A       Y       0.0279441       1002</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="ex">1</span>       1:15777:A:G     A       G       Y       0.0738523       1002</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="allele-frequency-4">Allele Frequency</h3>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>In <code>PLINK1.9</code>, the concept here is minor (A1) and major (A2) allele, while in <code>PLINK2</code> it is the reference (REF) allele and the alternative (ALT) allele.</p>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Major / Minor</strong>: Major allele and minor allele are defined as the allele with the highest and lower allele in a given population, respectively. Then, major and minor alleles for a certain SNP might be different in two independent populations. The range for MAF(minor allele frequencies) is [0,0.5].</li>
+<li><strong>Ref / Alt</strong>: The reference (REF) and alternative (ALT) alleles are simply determined by the allele on a reference genome. If we use the same reference genome, the reference(REF) and alternative(ALT) alleles will be the same across populations. The reference allele could be major or minor in different populations. The range for alternative allele frequency is [0,1], since it could be the major allele or the minor allele in a given population.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="hardy-weinberg-equilibrium-exact-test">Hardy-Weinberg equilibrium exact test</h3>
+<p>The Plink flag <code>--hardy</code> will perform Hardy-Weinberg equilibrium exact test for each variant. The following command calculates the Hardy-Weinberg equilibrium exact test statistics for all SNPs.</p>
+<p>Suppose we have N unrelated samples (2N alleles). Under HWE, the <strong>exact probability</strong> of observing <span class="math inline">\(n_{AB}\)</span> sample with genotype AB in N samples is: <span class="math display">\[P(N_{AB} = n_{AB} | N, n_A) = {{2^{n_{AB}}}N!\over{n_{AA}!n_{AB}!n_{BB}!}} \times {{n_A!n_B!}\over{n_A!n_B!}} \]</span></p>
+<p>To compute the Hardy-Weinberg equilibrium exact test statistics, we will sum up the probabilities of all configurations with probability equal to or less than the observed configuration :</p>
+<p><span class="math display">\[P_{HWE} = \sum_{n^{*}_AB} I[P(N_{AB} = n_{AB} | N, n_A) \geqq P(N_{AB} = n^{*}_{AB} | N, n_A)] \times P(N_{AB} = n^{*}_{AB} | N, n_A)\]</span></p>
+<p><span class="math inline">\(I(x)\)</span> is the indicator function. If x is true, <span class="math inline">\(I(x) = 1\)</span>; otherwise, <span class="math inline">\(I(x) = 0\)</span>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="hardy-weinberg-equilibrium-exact-test-1">Hardy-Weinberg equilibrium exact test</h3>
+<p>Calculate the HWE exact test statistics”</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>        <span class="at">--hardy</span> <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>        <span class="at">--out</span> plink_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a>    <span class="fu">head</span> <span class="at">-n4</span> plink_results.hwe</span>
+<span id="cb14-2"><a href="#cb14-2"></a>        <span class="ex">CHR</span>              SNP     TEST   A1   A2                 GENO   O<span class="er">(</span><span class="ex">HET</span><span class="kw">)</span>   <span class="ex">E</span><span class="er">(</span><span class="ex">HET</span><span class="kw">)</span>            <span class="ex">P</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="ex">1</span>      1:14930:A:G  ALL<span class="er">(</span><span class="ex">NP</span><span class="kw">)</span>    <span class="ex">G</span>    A             4/407/91   0.8108    0.485    4.864e-61</span>
+<span id="cb14-4"><a href="#cb14-4"></a>    <span class="ex">1</span>      1:15774:G:A  ALL<span class="er">(</span><span class="ex">NP</span><span class="kw">)</span>    <span class="ex">A</span>    G             0/28/473  0.05589  0.05433            1</span>
+<span id="cb14-5"><a href="#cb14-5"></a>    <span class="ex">1</span>      1:15777:A:G  ALL<span class="er">(</span><span class="ex">NP</span><span class="kw">)</span>    <span class="ex">G</span>    A             1/72/428   0.1437   0.1368       0.5053</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="applying-filters">Applying filters</h3>
+<p>Previously we calculated the basic statistics using <code>PLINK</code>. But, when performing certain analyses, we just want to exclude the bad-quality samples or SNPs instead of calculating the statistics for all samples and SNPs.</p>
+<p>We can apply the following filters for example:</p>
+<ul>
+<li><code>--maf 0.01</code> : exlcude snps with maf&lt;0.01</li>
+<li><code>--geno 0.02</code> :filters out all variants with missing rates exceeding 0.02</li>
+<li><code>--mind 0.02</code> :filters out all samples with missing rates exceeding 0.02</li>
+<li><code>--hwe 1e-6</code> : filters out all variants which have HWE exact test p-value below the provided threshold.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="ld-pruning">LD Pruning</h3>
+<p>There is often strong <code>Linkage disequilibrium (LD)</code> among SNPs, for some analysis we don’t need all SNPs and we need to remove the redundant SNPs to avoid bias in genetic estimations. For instance <code>--indep-pairwise 50 5 0.2</code> to filter out those in strong LD and keep only the independent SNPs.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>        <span class="at">--maf</span> 0.01 <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>        <span class="at">--geno</span> 0.02 <span class="dt">\</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>        <span class="at">--mind</span> 0.02 <span class="dt">\</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>        <span class="at">--hwe</span> 1e-6 <span class="dt">\</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>        <span class="at">--indep-pairwise</span> 50 5 0.2 <span class="dt">\</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>        <span class="at">--out</span> plink_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://www.cog-genomics.org/plink/1.9/ld#indep">LD</a></p>
+</section>
+<section class="slide level2">
+
+<h3 id="ld-pruning-1">LD Pruning</h3>
+<p>This generates two outputs: <code>plink_results.prune.in</code> and <code>plink_results.prune.out</code>. You can check the PLINK log to verify how many variants were removed based on the filters you applied:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a>    <span class="ex">Total</span> genotyping rate in remaining samples is 0.993916.</span>
+<span id="cb16-2"><a href="#cb16-2"></a>    <span class="ex">108837</span> variants removed due to missing genotype data <span class="er">(</span><span class="ex">--geno</span><span class="kw">)</span><span class="bu">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>LD-pruned SNP file.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a>    <span class="fu">head</span> <span class="at">-n4</span> plink_results.prune.in</span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="ex">1:15774:G:A</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>    <span class="ex">1:15777:A:G</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="ex">1:77874:G:A</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>    <span class="ex">1:87360:C:T</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="inbreeding-f-coefficient">Inbreeding F-coefficient</h3>
+<p>Next, we can check the <code>heterozygosity-F</code> of samples. Usually, we need to exclude individuals with high or low heterozygosity coefficients, which suggests that the sample might be contaminated.</p>
+<p><span class="math display">\[F = {{O(HOM) - E(HOM)}\over{ M - E(HOM)}}\]</span></p>
+<ul>
+<li><span class="math inline">\(E(HOM)\)</span> :Expected Homozygous Genotype Count</li>
+<li><span class="math inline">\(O(HOM)\)</span> :Observed Homozygous Genotype Count</li>
+<li>M : Number of SNPs</li>
+</ul>
+<p>High F may indicate a relatively high level of inbreeding.</p>
+<p>Low F may suggest the sample DNA was contaminated.</p>
+<p><a href="https://www.cog-genomics.org/plink/1.9/basic_stats#ibc">het</a></p>
+</section>
+<section class="slide level2">
+
+<h3 id="inbreeding-f-coefficient-1">Inbreeding F-coefficient</h3>
+<p>Plink F-coefficient</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>      <span class="at">--extract</span> plink_results.prune.in <span class="dt">\</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>        <span class="at">--het</span> <span class="dt">\</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>        <span class="at">--out</span> plink_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check the output <code>F</code>:</p>
+<pre><code>```Bash
+head -n3 plink_results.het
+    FID       IID       O(HOM)       E(HOM)        N(NM)            F
+HG00403   HG00403       180222    1.796e+05       217363      0.01698
+HG00404   HG00404       180127    1.797e+05       217553      0.01023
+```</code></pre>
+<p>Commonly samples with heterozygosity F deviating more than 3 standard deviations (SD) from the mean are excluded. Some studies used a fixed value such as +-0.15 or +-0.2.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="inbreeding-f-coefficient-2">Inbreeding F-coefficient</h3>
+<p>Here we use +-0.1 as the <span class="math inline">\(F_{het}\)</span> threshold for convenience.</p>
+<p>Create sample list of individuals with extreme F using <code>awk</code></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a>    <span class="co"># only one sample</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>    <span class="fu">awk</span> <span class="st">'NR&gt;1 &amp;&amp; $6&gt;0.1 || $6&lt;-0.1 {print $1,$2}'</span> plink_results.het <span class="op">&gt;</span> high_het.sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="sample-snp-filtering">Sample &amp; SNP filtering</h3>
+<p>Sometimes we will use only a subset of samples or SNPs included the original dataset. In this case, we can use <code>--extract</code> or <code>--exclude</code> to select or exclude SNPs from analysis, <code>--keep</code> or <code>--remove</code> to select or exclude samples.</p>
+<p>For <code>--keep</code> or <code>--remove</code>, the input is the filename of a sample FID and IID file. For <code>--extract</code> or <code>--exclude</code>, the input is the filename of an SNP list file.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">head</span> <span class="at">-n4</span> plink_results.prune.in</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="ex">1:15774:G:A</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">1:15777:A:G</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">1:77874:G:A</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="ex">1:87360:C:T</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="data-management-make-bedrecode">Data Management (make-bed/recode)</h3>
+<p>By far the input data we use is in binary form <code>.bed</code>, but sometimes we may want the matrix version. To convert the formats, we can run:</p>
+<p>Convert PLINK formats</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a>    <span class="co">#extract the 1000 samples with the pruned SNPs, and make a bed file.</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>        <span class="at">--extract</span> plink_results.prune.in <span class="dt">\</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>        <span class="at">--make-bed</span> <span class="dt">\</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>        <span class="at">--out</span> plink_1000_pruned</span>
+<span id="cb22-7"><a href="#cb22-7"></a>    </span>
+<span id="cb22-8"><a href="#cb22-8"></a>    <span class="co">#convert the bed/bim/fam to ped/map</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>            <span class="at">--bfile</span> plink_1000_pruned <span class="dt">\</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>            <span class="at">--recode</span> <span class="dt">\</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a>            <span class="at">--out</span> plink_1000_pruned</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="apply-all-the-filters-to-obtain-a-clean-dataset" class="slide level2">
+<h2>Apply all the filters to obtain a clean dataset</h2>
+<p>We can then apply all the filters in one-run and remove samples with high <span class="math inline">\(F_{het}\)</span> to get a clean dataset.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>        <span class="at">--bfile</span> <span class="va">${genotypeFile}</span> <span class="dt">\</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>        <span class="at">--maf</span> 0.01 <span class="dt">\</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>        <span class="at">--geno</span> 0.02 <span class="dt">\</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>        <span class="at">--mind</span> 0.02 <span class="dt">\</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>        <span class="at">--hwe</span> 1e-6 <span class="dt">\</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>        <span class="at">--remove</span> high_het.sample <span class="dt">\</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a>        <span class="at">--keep-allele-order</span> <span class="dt">\</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>        <span class="at">--make-bed</span> <span class="dt">\</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a>        <span class="at">--out</span> sample_data.clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="other-common-qc-steps-not-included-here" class="slide level2">
+<h2>Other common QC steps not included here</h2>
+<ul>
+<li>check-sex: compares sex assignments in the input dataset with those imputed from X chromosome inbreeding coefficients<a href="https://www.cog-genomics.org/plink/1.9/basic_stats#check_sex">https://www.cog-genomics.org/plink/1.9/basic_stats#check_sex</a></li>
+<li>case/control nonrandom missingness test: detect platform/batch differences between case and control genotype data by performing Fisher’s exact test on case/control missing call counts at each variant. <a href="https://www.cog-genomics.org/plink/1.9/assoc#test_missing">https://www.cog-genomics.org/plink/1.9/assoc#test_missing</a></li>
 </ul>
 </section>
 <section id="principal-component-analysis-pca" class="slide level2">
 <h2>Principal Component Analysis (PCA)</h2>
-<ul>
-<li>Concept of PCA</li>
-<li>Application in ancestry determination</li>
-<li>Plotting PCA results</li>
-<li>Interpreting PCA plots to infer ancestry</li>
-</ul>
+<p>PCA aims to find the <strong>orthogonal directions of maximum variance</strong> and project the data onto a new subspace with equal or fewer dimensions than the original one.</p>
+<aside class="notes">
+<p>Simply speaking, <strong>GRM (genetic relationship matrix; covariance matrix)</strong> is first estimated and then PCA is applied to this matrix to generate <strong>eigenvectors</strong> and <strong>eigenvalues</strong>. Finally, the <span class="math inline">\(k\)</span> eigenvectors with the largest eigenvalues are used to transform the genotypes to a new feature subspace.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p><img data-src="images/pca.png" style="width:80.0%"></p>
+
+<aside><div>
+<p><a href="https://doi.org/10.1016%2Fj.ajhg.2010.11.011">ref.</a></p>
+</div></aside></section>
+<section id="example-pca" class="slide level2">
+<h2>Example PCA</h2>
+<div class="top-right">
+<p><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">link</a></p>
+</div>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="im">import</span> plotly</span>
+<span id="cb24-3"><a href="#cb24-3"></a></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="co"># some random data</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>cov <span class="op">=</span> np.array([[<span class="dv">6</span>, <span class="op">-</span><span class="dv">3</span>], [<span class="op">-</span><span class="dv">3</span>, <span class="fl">3.5</span>]])</span>
+<span id="cb24-6"><a href="#cb24-6"></a>pts <span class="op">=</span> np.random.multivariate_normal([<span class="dv">0</span>, <span class="dv">0</span>], cov, size<span class="op">=</span><span class="dv">800</span>)</span>
+<span id="cb24-7"><a href="#cb24-7"></a></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="im">import</span> plotly.graph_objs <span class="im">as</span> go</span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb24-11"><a href="#cb24-11"></a></span>
+<span id="cb24-12"><a href="#cb24-12"></a>cov <span class="op">=</span> np.array([[<span class="dv">6</span>, <span class="op">-</span><span class="dv">3</span>], [<span class="op">-</span><span class="dv">3</span>, <span class="fl">3.5</span>]])</span>
+<span id="cb24-13"><a href="#cb24-13"></a>pts <span class="op">=</span> np.random.multivariate_normal([<span class="dv">0</span>, <span class="dv">0</span>], cov, size<span class="op">=</span><span class="dv">800</span>)</span>
+<span id="cb24-14"><a href="#cb24-14"></a></span>
+<span id="cb24-15"><a href="#cb24-15"></a><span class="co"># Perform PCA</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb24-17"><a href="#cb24-17"></a>pca_result <span class="op">=</span> pca.fit_transform(pts)</span>
+<span id="cb24-18"><a href="#cb24-18"></a></span>
+<span id="cb24-19"><a href="#cb24-19"></a><span class="co"># Create a Plotly scatter plot</span></span>
+<span id="cb24-20"><a href="#cb24-20"></a>trace <span class="op">=</span> go.Scatter(</span>
+<span id="cb24-21"><a href="#cb24-21"></a>    x<span class="op">=</span>pca_result[:, <span class="dv">0</span>],</span>
+<span id="cb24-22"><a href="#cb24-22"></a>    y<span class="op">=</span>pca_result[:, <span class="dv">1</span>],</span>
+<span id="cb24-23"><a href="#cb24-23"></a>    mode<span class="op">=</span><span class="st">'markers'</span>,</span>
+<span id="cb24-24"><a href="#cb24-24"></a>    marker<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb24-25"><a href="#cb24-25"></a>        size<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb24-26"><a href="#cb24-26"></a>        color<span class="op">=</span><span class="st">'blue'</span>,</span>
+<span id="cb24-27"><a href="#cb24-27"></a>        opacity<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb24-28"><a href="#cb24-28"></a>    )</span>
+<span id="cb24-29"><a href="#cb24-29"></a>)</span>
+<span id="cb24-30"><a href="#cb24-30"></a></span>
+<span id="cb24-31"><a href="#cb24-31"></a>layout <span class="op">=</span> go.Layout(</span>
+<span id="cb24-32"><a href="#cb24-32"></a>    title<span class="op">=</span><span class="st">''</span>,</span>
+<span id="cb24-33"><a href="#cb24-33"></a>    xaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">'Principal Component 1 (PC1)'</span>),</span>
+<span id="cb24-34"><a href="#cb24-34"></a>    yaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">'Principal Component 2 (PC2)'</span>),</span>
+<span id="cb24-35"><a href="#cb24-35"></a>    autosize<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb24-36"><a href="#cb24-36"></a>    width<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb24-37"><a href="#cb24-37"></a>    height<span class="op">=</span><span class="dv">550</span>,</span>
+<span id="cb24-38"><a href="#cb24-38"></a>)</span>
+<span id="cb24-39"><a href="#cb24-39"></a></span>
+<span id="cb24-40"><a href="#cb24-40"></a>fig <span class="op">=</span> go.Figure(data<span class="op">=</span>[trace], layout<span class="op">=</span>layout)</span>
+<span id="cb24-41"><a href="#cb24-41"></a>fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="7079ba52-3209-4c60-b27c-7050b02c2ffb" class="plotly-graph-div" style="height:550px; width:1000px;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("7079ba52-3209-4c60-b27c-7050b02c2ffb")) {                    Plotly.newPlot(                        "7079ba52-3209-4c60-b27c-7050b02c2ffb",                        [{"marker":{"color":"blue","opacity":0.5,"size":8},"mode":"markers","x":[-0.9639585813181223,-2.000943622323268,-5.731032443121798,0.4532508471205775,2.467046750270325,-2.029123800707625,0.40901941023781363,3.3819682205143407,-3.5518929142402276,-3.3398932787428026,-0.9365140160727378,2.607649350122914,-3.692258806891257,-1.787076361305092,-6.3896553966715075,-4.330743166262388,-2.355733668153719,-0.7519064516425538,4.886619303585935,-4.758533227588756,1.324401348364599,0.8590114719516222,1.6445196237189508,4.053227336478447,0.19468564867888366,1.839590561833003,-4.365247266121587,1.8211117682416498,3.1758799416111945,4.30432469177273,2.677516718292903,0.27250127610825353,2.1196638608179117,2.683727679852646,1.06004278615664,1.296780263399998,-1.6538153506409943,-0.2622558016460655,1.2055353978090215,0.4223320155036813,-2.538984870746415,-2.118809771347615,-0.35952528496074715,-1.6771608934353577,-1.9915003793439798,-2.2261560287936444,-2.828155219934674,0.6561061258648054,-2.4351446527090674,2.102740865816318,1.142300400449398,0.2715105478000181,0.09418481780792147,3.023579741409338,0.7443458178097866,2.2454656961882615,-1.7450770749395053,-0.5302244900786525,-0.792747294838168,4.960961220881703,4.892599477326443,0.21682896165201934,-1.6906194259529952,2.310481344355987,-2.2620426745279887,2.493642756784421,-2.1633575179262885,3.088668503758397,-2.0492085016802863,-1.6656936884591063,2.3949647741189874,0.0657260329372381,-3.8025677661922375,7.27577519097816,-4.049375450976949,3.370260674462707,-2.0520272759902296,1.5841309347338972,2.70878083528114,-1.6296245786973085,3.705428127172609,2.5820507126413506,8.0169284056764,3.4065966308331395,4.305748344346534,3.909621218259525,4.0535920228841436,-1.3839252027542863,2.135648128443116,2.6732848581115847,1.6439516629739017,-4.951140444389377,1.928673532691061,1.2891667945520995,0.21642334844969036,-1.685397922906401,0.008420245612632183,-0.3157403694332689,-3.9883599092212174,-3.7364087738454077,-2.827440948902291,-6.2499584013692076,-0.6004381074285426,-2.648400288733826,-2.780886628279169,-0.8046769146044247,2.1022786863230802,0.6841422240347879,-0.35669783979351677,0.585722340388338,0.3430363972530063,-1.779400546708153,1.9356480517159802,3.1364216587997142,-1.1686069132336399,2.8104919702271474,-7.091874415751175,-2.591444747225447,1.1929412776744672,6.63186177096887,0.0064750748375244785,1.5362033898244252,1.3078157988573726,0.5051694516249632,-0.39121092623277237,0.45671616484401645,0.8150656968859924,0.1646919472214102,4.132901232684279,-3.2126120257484168,1.6021272874117474,-0.5644947624264232,3.2616746293866394,0.040284728203300826,2.3839941462278436,-1.8338054133112214,0.7537860049998334,-3.043378541366952,2.0753116919434365,-0.27531239348251635,3.4334431951630795,0.42985549237144205,1.9003503856037358,2.022290351236428,-0.7443494596989312,6.056450757020564,-0.6588917721536811,-0.6688771213469907,-0.8114398836860308,-3.669194671305271,-3.4305260321719606,-0.2117490637073594,0.6760994691860227,0.07277984246175181,-2.5626599292060814,3.5074172433897477,-1.1447101510363011,4.325479336336685,-0.24262884678647076,-1.5876254190181416,2.628482087647009,-1.8737463224802626,-1.8053750693207282,-0.5815670037894735,2.9756515683629443,-0.6307848241082784,0.9532050224053634,-4.496822172638892,-0.47332007109163043,-4.495515622303229,-2.9464213320635073,5.5077983273959985,-2.8828089027400403,-1.524687307554609,-2.146847973218598,3.3635695582245067,1.2770998396277828,4.303539684914659,4.0603713423687005,0.6352439731735462,-5.294415611733098,1.053445229228043,2.2671165076126454,0.5548911165672236,-1.5116488405840898,-1.908430308143177,-2.193360869556275,-2.082554828746754,1.5822720339205767,2.3413894338942898,2.394513635333062,-2.3504164091942887,-3.0504218433204655,-2.0225465666650773,-2.4216434565934843,-2.785795645261883,5.180811339023879,0.5745176026890118,-0.5392426387641442,-4.624940691153273,3.056484321553352,-0.44600578399866436,3.992889305494945,-2.709082046085777,-2.717103090117968,-2.8604782052671407,-4.2167641364141675,-0.16699621649894125,5.258869618757023,0.15381808741646164,-2.1077328465206,0.034813630192347206,0.9286930760871976,1.4779635846333354,-0.01600956732775631,-3.18074506937618,-5.076582199704034,2.255151256465132,-4.849489091829694,3.439130371953389,-1.54186037671593,-2.889125177891253,-0.5590876101188345,2.2556765053880947,-2.38601599021029,-1.122839949110649,1.709405556464236,3.5834272082087835,-6.038786403156333,-0.10061657345900651,-0.6187399280294553,0.7757745630880947,-0.8721115153836998,0.6541161275073253,-3.2320030353164655,4.957367834295214,0.2670668607914393,0.8180118460325934,0.41204327941770236,6.395081477569044,4.344328663139894,-1.3893900365969742,0.37651882380007856,5.400838840806796,-0.4905656395072052,-1.1542027990957962,0.008774011163569266,0.36566944646153327,-3.440730412871041,0.6212192774522863,1.2442979958712292,1.8523868137419879,2.544685575090345,2.033999567312428,3.192319275518252,-1.879451813509513,1.8769005628470254,-0.7118790225153033,0.7181577524823832,-0.8392169593982245,-6.788504351486148,3.375918347095446,-4.077736449625221,0.6278104533906046,4.412238476780506,2.026723465686203,-1.0895267342002426,3.7767955542617293,-1.3137892517499605,-3.0262398311130405,-3.936775839426237,0.89364946052592,1.9210109977149485,1.028281947356022,-0.2801412139956338,0.47015886594186446,-1.8191369411673297,-2.1231795010954735,3.9830962301942927,0.6702542116851963,3.063875194450672,-0.7811542859711152,-0.6288390165494163,0.4570340067239273,2.3302372428134013,-0.5617164050444449,3.7403124924872224,3.956365951790989,1.4256857253948383,0.5970607631890934,3.2126420838571894,-1.3299605519546358,3.5066095975221807,-2.0642669675264904,1.075524421989646,2.203642554124226,4.548163737120388,-3.0252072746484013,2.5115986071861154,-2.906722153824835,0.38111174830669875,-2.091800682874917,6.052009119687017,-0.12411820037902561,-2.090379845123369,1.1043810076696168,-0.003257995014633102,-3.679966308856183,1.7236800536766856,-1.1527145768774778,-0.26270164971409965,1.395087429021911,-0.9444780934294901,1.4065428532185351,2.377046234066772,0.704190116651476,-3.3813416244957484,1.040783943097246,-0.29611697517497787,-0.09265688832318515,5.192451994416373,2.4449522379262643,6.009094676813167,0.5986790260872226,-6.320841447026652,-1.6290802029167955,1.1163476231133174,3.18568244470134,-3.7336115483723527,5.882630215205319,3.3298461348702832,-1.263994020154613,-8.665383728331037,-2.420525039557563,-2.4118621070160207,1.9942590894287688,0.6442466219446422,-1.6295779471500211,-0.2995795845032923,-0.08027347235189577,-2.02770230376622,-2.8333262431094304,0.4094539586446393,0.5643788704331867,2.0695406100743448,1.8255896862888268,-0.011702373148230843,-3.8011071218278087,0.2978829834221611,1.075146466189765,-1.7177458440131514,4.652187499054397,-0.2658359527685662,-6.113710232651972,-0.5355084276571925,3.715577691158184,0.45293337051618654,-6.7794657086167,-2.2402106705345526,1.8140050007051791,-0.7789904637825682,-0.9588837247093247,-3.669474112565962,-1.6920629262452425,1.7461790681552616,-0.5063951182060095,-5.043805900268737,-4.290054297307225,0.3265616378655824,-2.830686313103779,-0.249771000893733,-2.8073291805521357,-0.19752799694542245,-1.7062334436491005,-2.684706639452835,1.8979016045405677,-3.4923728980905797,2.2732417062520924,5.455317047102578,0.5253046455635999,-3.5027294913382128,-3.6060514356025086,1.6148498777891391,0.8028449131058387,4.315885965914494,2.902436270369829,-0.7033732478091194,2.094005730795667,1.097172119869275,-3.840229135222333,-2.537143403283333,-1.3053738330722764,3.266443192036347,-0.9505550631658864,3.5164603143757733,0.24358513135521975,-1.6400619781894215,-2.3174313794489043,-4.650820743366608,0.7390645089709883,-2.464574731722139,0.2046858707057736,3.204968617181435,2.088310632643582,3.986664962545716,0.16287268378201555,1.7764132793000809,-0.4324038520288984,-7.647585910140022,-1.939593428114812,0.5011735040409228,-3.391427107163348,-0.8264677629091474,4.024234349858224,-4.950608505593612,-3.280524945570575,-3.379551157292755,2.9628525314753498,1.569537853799444,0.19231225106000618,-0.9652861612870545,-0.769617748854658,3.855986255647411,-3.8795155221905184,-0.12405858227562645,-3.032878995070544,1.363652122179269,0.7332561752948105,2.1491431358952933,-0.6256393234390218,2.935350935179032,0.19086787376259504,3.9620795383525302,2.139858627097182,-0.6450353908435452,-0.12887269499223947,2.6575123743560853,-4.860143705299239,-1.7276413874753112,0.011803356489412222,1.1707898690335405,-0.6807982457115671,1.422811571742586,1.5953572330819428,-2.3377908808097527,0.7621161052691023,2.6895154064563433,-0.2271025770936902,2.9767613410714993,0.5913530067284792,-0.3380947722587718,-2.7253541130051073,0.6268162367492275,0.6259835539938989,-0.4055840617895487,4.2641850987937024,0.970418526382791,5.619515291818613,-1.69353927191312,1.9570430936286995,-0.717223037129132,1.6730222531034962,1.4167111472043759,-1.93141427837684,-0.6425868593255797,2.625867242250253,1.1286822062004576,0.20315938046146323,5.84675770236363,0.9315532393915175,3.262357102770034,0.40434823372153555,-0.17921810156383317,-6.4314832041657946,1.2150977162552912,2.098622832393494,3.936902597453539,-0.7434506425335987,-0.9028480347317286,-6.025298868450496,0.11237419240002951,-4.5639377761745585,-3.1502191468793685,-4.36544441168884,-2.420864941784703,3.7823511641598695,-4.977808467681199,-2.5236184821031884,1.020452871463626,0.38287564737055707,-1.370575637441174,1.0960385606476173,-1.8814453813737804,0.7433458134225059,-1.2032444062422116,6.019514665886795,-2.9259614402379475,0.3017871822897338,1.7043467065826599,-1.5445957052728854,-4.039846556266554,1.4752760858376792,-0.6203004512749293,2.676245783587839,-3.0408146953250084,3.119611350917644,-3.8850792705726085,1.4019350476787238,1.913567927617342,0.1928551906972327,-2.92855320613064,-3.7419354174768804,0.6614530741674287,0.916247629993765,3.818951601589106,-1.682281474067513,-0.7319392557166869,1.5516295157998115,3.2690034325713264,-0.44698214486653404,2.6637287261088662,1.6947651353517657,-3.6444072248920123,-2.684873771461831,2.7541985657673687,-2.2749847925326616,1.4530412395464791,3.911229796827019,0.9628919976615893,-0.9930585039029057,2.4916316010029758,0.054214205632323126,-4.603196528743002,6.52806344481374,4.118556643890115,-2.8835258430622317,2.9774364701054594,-1.2202715204437762,0.6207222164677193,1.4278896907291452,1.4233094888759195,-1.4381634828078849,-0.5076226609974395,0.8667177545926741,-0.9219556802820881,0.1698586506524375,-0.02901176835350848,1.8180872213024715,-2.9631714484024934,0.9733986918253795,-0.6060366210232945,1.5889751214805088,-5.284130007724277,-1.6822819746787756,-2.660706643718582,-0.8035199651794221,-1.4911606370697286,2.0944257762679253,-2.750124390364831,3.012866114460386,-0.2650306136980481,-0.7788861857611966,-1.3860084247353304,1.037437460544176,-1.986587624866327,0.16571592667682272,-7.1828047061324325,-0.9252231379222806,-6.583835020141539,-1.8796308962839519,-1.8149528419573362,0.023989363985758086,-2.6547540665835903,-2.284582585809013,-1.1214665627532447,0.7605409893429756,4.278897467662292,5.180097636011145,-3.1002004247044233,-2.0158630196179117,-3.879168037222358,-6.557208777313102,0.1136626261673285,-1.3107337290774859,-1.2315969714731727,2.012492158365501,-0.8673977364968597,-2.807045446557673,0.9158934799317353,3.169456435560485,-3.2047480345394934,-2.2361987282289544,-3.526787070173057,-0.66179379959541,6.100681284243443,0.26069535219287837,0.7621192243019835,-0.7723034797271393,2.482213802855351,2.517073033879282,0.3524751641580703,-0.5490051172560139,-2.5913780982728656,1.901506250904957,-0.5250267843229093,-3.7227725406932515,0.18926166353725046,-0.6594257843080885,-2.0499993541371677,-1.3925260775189745,0.5945987492539281,-3.3540145359230458,-6.078125047830746,0.46201931604919183,0.8187287136536459,-2.069223667833676,-3.473332306821227,-4.15036775642286,3.7313211766910213,-0.2774863840341708,-0.9460029050062511,2.9060120141176693,2.2627336709571004,-2.817866782387241,0.8882333171755572,0.30653106276420716,-2.2998792002077053,3.16231978889673,3.068433636884327,-0.7864096273989795,-0.4439964749178589,4.535706073805816,-2.9443219411184467,-0.647329938098598,0.7078023056755008,-4.733974420960224,-1.3494620784805145,1.7246270053682156,5.963597524797977,-1.4766449293988109,-3.5921479002491483,2.0264283777623837,-3.472712311589554,5.593506975849047,-1.9020682639750222,-1.0993478067856741,-0.33244998996586206,0.5370492923617934,-2.113665017526445,0.052788068627848274,8.70680042621062,2.8460378049635287,0.44810398443664234,-0.08216846624574094,-0.6678442012403917,1.562874842612211,0.4008865297800423,-4.1532809569811535,1.291367353304308,-0.9251968842935823,-1.728378182361565,2.116499589825666,-0.7933938435191131,1.069203526537693,-2.535819741552052,-3.4341977151654977,-1.6596621271737795,1.3898928509919477,-0.8142402549284712,-1.8882358709002574,-1.1956907979595262,1.99722758886681,2.883924445980728,-1.7969619188831247,-3.0748619972612246,1.818471993969309,-2.8633658198253014,-3.7655776574684934,-3.355982146871438,0.8725935664631608,1.4994591798350925,1.014197947505351,0.8915977162072458,-0.36789895480902896,5.1095282412660685,0.7778420489211466,-5.089823138069959,3.046114016658934,0.20975290642814393,-1.1109153219363086,1.0810339404523641,0.8707893135358518,-0.9202395192446279,-1.7944628427267904,3.456509970362374,-2.911153578640914,3.1958387889926936,1.205302760568009,-0.4797711204182475,-5.554354275109538,-2.1146164646560166,2.6089416539355272,2.449755522632999,1.4236983878240352,-5.055092976290214,-4.180246970762724,-1.3197477082921285,2.8659462429267855,-0.5042870684262126,-0.21262524022008272,0.15318267447226316,3.300164379756213,3.7094868868064097,1.7998734293164913,-0.9513439993377989,1.9918858192449909,-4.0764183223547885,-1.1198388673253723,2.008136047092433,1.3656601686069203,-0.3809299863302847,-6.637930493705536,1.8534830441117913,1.3740655432446292,-0.11879491479169756,0.2798550350465507,1.5742703227863057,0.9207239512321921,3.2551858453060105,1.53613241116825,-4.251300979182988,-1.9955864409403548,0.09293318377066617,1.2992193937924257,1.7608162064335424,2.0086931136244495,-2.0822867780555043,6.494596101726015,-1.2288963701425775,4.108522143600699,1.0468778740726392,0.6749135701938141,1.534701617310421,-4.8418105923779615,0.43942482743492084,-1.424139984370281,-3.9764115360263426,-2.8515626678592003,-1.1865164365597987,0.9106347766021935,-3.425204414473182,-0.4027729242864448,1.496542899936892,-1.316571924557318,-1.4994531218700198,-1.946788892321961,0.8604126161820589,4.373059496942986,0.060548841807555334,-0.2442056823954207,-0.8599896329116032,1.89254824339175,1.6614475548832335,4.2890409524548545,3.171012482902271,0.24082276063492014,0.877917379208546,-2.147389875993708,2.228111648487044,-2.4888224331071287,-8.081029128886618,-2.6673954109255984,-1.7722719406184435,0.24163225968040578,-0.29858766382097124,5.434231726749147,1.157620119526661,-0.32618161985824756,-3.9886605207770627,2.2967613863719656,0.8880820858967203,6.48360046499938,2.1824795902388114,-0.1320605493564722,0.9991313066781862,-4.522616466525686,6.95148704993366,5.09255274890621,0.03405818117578497,6.063266338974343,-1.8612754018977617,-0.5264049752916916,-1.8296463574958368,4.407484737728197,-3.2793614432287606,2.0481799932573312,-0.25932342248646895,1.0166273515161297,0.6128284160189574,-0.8344810254803061],"y":[1.3742867660897924,1.9599978810708665,-0.617219502316889,-0.15896659175083405,-0.39102569212197985,1.8949765121088509,-0.21707379590249376,-0.054427636703058835,1.3394077933419488,-1.0754074622813885,-0.7542994036794968,-0.27133219697345207,-0.7385771685961992,0.09687819350379952,1.039757055451768,0.2736129337618038,-1.0957617376425224,1.469524486260726,-0.04056224341219019,1.6302120369940618,0.8963826633283547,0.8544877639366896,-0.6621181943914988,-1.8942809047405402,-2.6482903140318514,1.2306627675300232,-0.07301082541059864,0.03643200648906206,-1.4238539880040606,0.3108411723454671,-3.1086638877860273,0.7137873317704725,0.7564438231744159,1.2267203104846511,-0.7879405911111126,-1.1632719699632204,-0.6540971945222208,0.614825432379854,1.1130067737064662,0.24477638255578069,-0.5066420625181927,1.4798356563989683,-1.9306960726372504,-0.8986658997974089,-0.4633044228100977,-1.9538842803361194,-1.0791040651088393,-1.3312795709744425,-0.6813177498656666,-0.32935731777346694,0.055759714997871225,0.8909378621202756,-0.13512293286228516,-0.6564935286222725,1.46562792600145,-1.3586112326234345,0.48519403822359075,0.26710147371175663,-0.9697992592195945,1.2985082057796453,0.32848477319410907,-1.229570973943485,-0.3296089570328709,2.289663675656823,-0.9185408224754558,0.35190645513632235,-1.3404202269480832,-0.6352340925171399,4.265507567850782,1.400467792629298,1.0314302764927923,-1.6782552552236663,1.9724884377797782,1.7629769015292238,-0.007104396390735638,0.3491797850986686,-0.007505990535312112,0.6650573717833057,0.7447728301575559,-0.8566221702371165,-0.12330519149227323,1.345736992784205,-0.031032592911583293,-1.1183897352240817,0.6137391387975246,-0.5608188933141498,1.128123331934513,-0.3526441449171843,0.8782028801314472,1.2884015320384656,-0.2961368318331125,0.16095208410653764,-0.050027169149068525,0.01439354575333319,-0.0425981527088265,0.8707348991790352,-2.3650995649031845,-0.09683715131431998,0.7917474100815026,-1.0421358399923133,-0.4363475950237076,-1.5683479256568829,-0.6781885091932447,-1.7574554462218757,0.7053501686754965,-0.028430969232617457,-0.38490865794119233,-1.6315718292719232,-1.9237040264083447,-0.021325205928574027,2.4234522298749637,0.9735581326522853,-1.66224983518966,-0.4996905633312604,-0.6418831266286639,-0.5290285380277402,-0.1550333401952083,-1.0777820669181093,0.7860872998340106,-0.5151427796964144,-0.6064483177924911,1.0438717843142615,0.1606666315989623,1.5229703559540497,-1.1365216716171247,-1.3034231511663938,2.56983998127462,-2.482489676044415,1.2836757107453982,-0.5087677012255387,-0.2238119751382153,-0.9672913162394955,-0.5305609409319519,2.3102829886528116,-1.276498470322566,-1.1269502235571929,-0.6944494994387413,0.8990675853876732,1.012756598815631,0.2506349103314744,-0.40084169183239526,1.0929960953000888,-0.9812880656584448,1.1280454713468644,2.1115528528447944,-0.6166463514514958,0.933868683857809,-1.4432394142366178,0.08702016003849437,0.13505790676809842,-1.3661593367266225,-1.3540485797768351,0.36983203300603446,-1.4409600550666968,0.30515206832966074,-0.9687127354889304,-0.0008054834122065891,-0.3228580798523862,1.085079188986844,0.6876359721835046,-1.3504636126094907,-0.7471279043543887,0.6574409025440455,-2.026939500177129,0.46938952626348573,-2.0239180443513174,-0.5685462985478416,0.44296501471299743,-2.1965718123605575,-2.6496621820228725,1.5097898674855996,-0.9025001959177668,-1.5501260203629084,-0.19306340570571312,-1.280995307490329,-0.11646718275611598,0.3424473030172044,-0.11823030378455504,-1.1543833764538687,1.0074404951053666,-0.627160446802283,-0.5408954194349188,3.305182482820442,-0.5724753164339237,-0.8376369379890128,0.14852088214920883,-0.009331719834572818,-0.20068673263400744,-0.005033577690716409,0.4780105918217291,1.6176826622063767,0.8429645463441846,0.2071393242277218,-0.8048802025026257,-0.5575958467560735,-1.2215663821469418,0.7453493847759834,0.8193150305366386,-0.8376544619810097,0.6669630299361836,-0.881783674317893,-0.8873353666444108,-0.5160397302092118,0.7516820629071573,0.5988271924554657,0.2985773983699654,0.8281728191492215,-0.5939417642191613,0.18283273919666093,0.03842552728051394,0.9075882033553492,1.190139542144229,1.7337427207201233,-1.6615852247109497,-1.0672196071968199,-1.2255242902488825,1.3738193731402115,1.8625736747759478,1.709791762460969,-0.06797767892321185,-0.5466365121951563,-1.3419730951494437,-1.4403839743200468,0.014554087630866824,-1.1140083534269007,2.273388866679114,-2.6656752056515476,0.22763489338988596,-0.31308424411014757,0.4020211122461512,-0.3607928889116649,0.5686479046728936,-2.5465500239752523,1.1668627469931325,-0.5444784616419865,0.5807618447893849,-0.1901613479008363,-1.0679299596551124,-0.15192639469608488,1.3772233940372933,-1.7069296370597113,1.0779134533065955,2.3177870054672383,-0.18150687508605973,-1.2003367792702646,-0.8124322527118157,-1.1321159239205263,1.7786175992728888,-0.5141332390715229,-0.04078972368277845,-1.3761037843873052,-3.1963842613150204,-0.40996600903687047,-1.3932888738297193,-1.4205292933378897,2.099623699930745,-0.13318489235356562,-1.8785042081236518,-1.2438456389562385,-0.046614782235443686,0.8549554714997927,-0.002077094743602889,-1.1232699602178404,0.6861553505065726,1.1122341307670063,1.620516941755917,0.7720468207173473,1.1193886090221468,0.6655186020175546,0.8962520777875758,0.7067995131651558,2.4902180908034683,-1.2384162071396543,1.5588322950365376,-1.9915501666097541,1.4277234160202201,1.5429083570231819,0.9390719798244572,-0.14641495384898023,1.2703727492536163,0.07609765032987063,-1.5626153469589108,-0.06899023458211632,-0.9644191800620454,0.8082845310978696,-1.431124911169763,-1.0577790045060984,1.2025166770648468,0.10220591179737738,0.9455555889627982,-1.4023055146354004,1.1258944997231795,2.228249593891432,-0.43034836471846044,-0.7043488853402129,0.48426874558477695,-1.3571340506866227,0.8468201213587697,-0.22898623082745873,0.48351923212106507,0.18051547205255536,-0.049080694328694344,-0.37772777921115847,1.6881940975849217,2.445763543927223,0.5298330320230015,2.0311581606451345,1.2739579745001945,-0.5105081929953149,2.4631407224753916,0.873676140132758,-0.022847862672620102,-0.13335415911278933,0.2842820072999553,0.31098104481755756,0.22713693935062754,-0.2603212919699342,0.17065967357224043,0.9958305023801206,-1.2670029321999048,0.6560090345138139,0.3804682651354941,0.21754278263264537,-1.8624898584068106,0.4643956586444481,-2.767917546657094,1.6782536509007955,0.03868832664172033,-0.4124956435332189,0.8606819474124491,1.435591574116425,-1.5139406483041353,0.2941572379036702,-0.2191266534314948,1.0944168764420843,-1.0565941433755175,1.8983182752385,0.8594578719825708,-0.965522584169498,-1.4799028141795174,1.0520055555540757,0.20499331387291417,-0.4969208881853007,0.6711836960166553,-0.48257183198956,-0.6718240636852786,1.6386073526400229,0.77892992546099,0.6338092684608417,0.482201005971628,0.47732082754611294,-1.0662457756600958,1.69281717205527,-0.5968534410142969,-0.6708716533510047,0.3636785199556093,-0.4583429838294831,0.35556811915046566,1.8823242445944177,1.4537526566020196,0.21494036488925253,-0.08830652895235659,1.0277683940108648,0.20208692785766422,0.2766108167810972,1.5032326071841204,-0.22274962867784126,-0.05118826538724489,-0.7557605249709629,0.6276210095345081,1.348656425747123,-0.6900505984030136,-0.2073555230418964,-0.7417048056403951,0.6925088961327659,0.22189976976397846,1.2577021205189995,1.3778038012635314,0.6814989285302622,-0.2167019626697663,0.9519955231210465,-1.3267007734346883,-2.097825014064222,0.437539398636563,1.1049329538325072,1.0326724789522543,-0.9654477666474851,-0.4490011988710414,-0.7796477929237705,1.9061168304395364,0.528564358503723,-0.0471277956153835,-0.15968510609543168,1.0383652079333268,1.2667596228489675,1.1217439129225133,0.06845418888232059,0.7991872134569502,0.8709655313987408,1.3491673645094078,-0.22817521920459885,-1.7924841436083951,-1.9905041828990222,-0.5952119159249779,-1.9900115937787584,0.6274285964342724,-1.3409278019965631,-2.6633695838746325,0.46646378406782557,-2.164042922777428,0.20382486690022436,-3.751450300537379,1.029366463634448,0.709161829487168,-0.00153613250324712,-1.5989656702271307,0.5187633748113435,0.1032331425417523,1.5580143551820693,-0.08114652468968368,-1.411825441429009,-0.6826016460512294,-0.6441956894860303,-1.9808388621673878,-0.1502928252269891,0.3311313576282234,1.0074584828734372,0.37674159746595426,1.5470593932274794,1.2146378487079956,-0.6491448096225005,0.5797181432090057,-0.6546267342189462,-1.1443664611955406,-0.23959774448825977,1.5421310276366074,-1.824621409341842,-1.210406717171477,0.4654295357114587,1.726085290558444,0.15242015468749387,-0.598604098161116,0.5803336737536269,0.4787004735915471,0.7715486857424675,-1.2273659037973064,-1.2905519316049119,1.2410996895778348,-0.04921891072123732,-0.2276815126914742,-0.6079289057084631,0.137348347473646,0.44565772089081246,-0.28575305804754286,-0.39837335821118586,4.10625927506329,-0.30402313743780723,-1.9801099960622293,-0.8170876348507508,-0.8370228541604602,1.2772598541999594,-0.7290579823170135,-0.4525854117797543,0.23421331991411135,0.8067464255830681,1.1755618715310787,0.7604642939203853,-0.21261904969002923,-1.1863012804605393,-1.2011081445051648,-0.8964603899057626,-0.9826423445092198,-0.6194600386459408,-0.27231056874295045,2.3041740334886662,-0.03927481571249509,-2.460421658859246,-2.2440418436089233,0.28776739859891354,-2.2497172139722537,-1.3814942796930925,0.3510579409264558,-0.7106633175369497,0.9027033888015767,0.3429896620470005,-0.2296189541563505,3.4822530083128886,-0.8703292810831128,-1.9175581775095674,1.08353883058863,2.0433314812183982,1.3296971473083579,-0.3126755650217691,-0.9740284040332942,-0.28335314896220576,-0.7319176267591725,1.656956555260447,-0.7367658082260136,1.125255324992459,-0.41258785852647906,1.2168161767356709,0.6078896554701294,-0.514809957810222,-0.7839103145137049,1.1883281421809537,3.4512638341419457,0.13241033673982538,0.016322044602734967,0.03455588115987428,0.5623897388893948,-0.7162184489954131,-2.086453726732509,0.5006543579811521,-2.387446404168142,-0.21552814461967323,1.11431686193215,-1.0800950084398426,-0.7471628243576882,0.3337533291603968,0.4924851041306151,1.6089631799369626,0.7649325502908417,-0.6023475807302195,0.06545791821071166,0.6229921114772773,-0.15708296279661302,-1.1274849006085916,1.4319159080006811,-0.6993256210299068,0.7816093458913973,0.5561207784227956,0.3565959507720794,1.3762731660385468,0.2899498709817026,1.6916734764564614,0.7706206753333069,0.6233480533274511,-1.2649361354705613,-0.5638631273900941,-1.043188651986589,1.1098539365010014,0.26389198994368496,0.3185126297808846,-0.19247436461815887,1.2539559098057722,0.8866151545142799,-0.318905230405041,0.6677408580896079,0.9241928480092629,-0.4776538418810013,-0.8926716051397183,-3.5479033318999393,-2.6426206714777525,1.8467746782100771,-0.8225589629760571,-1.4543662462663323,0.658850115141867,0.2819049740326881,0.7704994325806261,0.5884774777872116,-0.8545432609834368,-2.130756547927838,1.048028316767717,-2.8730606750097665,-0.6125745208857175,0.036937949129296495,1.330931334569474,-0.8308186770597868,3.370823274244437,-1.8752931884910158,-0.21582186672948325,-1.2841090009233247,-0.4672244721974916,-0.906025435425797,0.2113532142280854,-0.9365932847904863,0.45492952082845,-1.138177925450011,-2.2143775567694313,0.19440797597281426,1.224128893366888,1.4421931175556302,-1.7435523262967476,-1.475323952144856,-1.573445885626756,1.1384117035088726,0.4198575815490516,0.3560303426122894,0.6965432281386316,0.17260237152979288,-0.5765308832802808,1.663962461675518,-0.5832010156258155,2.508197228366543,1.736186477391868,-0.41988438848807913,1.7925457009877992,-1.3164690455844748,-1.2363672895433426,0.04259461651844377,1.5995499057829048,-0.7265410865987121,-0.26229721171423837,-0.033982327675551705,2.1376683055063235,-1.4567108433674107,0.89597114446051,-2.671025401149886,1.595395997442879,-0.6051773141064297,0.26861906445532,-3.0697631159671115,-0.40850331599439654,-1.74437504543481,-0.3278963037110338,-0.4210270381084434,1.0769978493039194,1.0514054796597019,0.6535758524853866,-0.09491230891235679,0.9899379892265273,-3.2939553147517477,0.3692232316770727,0.25797596187709043,0.6558683822261404,1.7194840457191667,-1.3268587615631644,0.11207212436507173,-0.17634908449026535,-0.5081825954643336,-0.564548509827893,-1.1952014120728658,0.6488453667154118,1.4180082208742624,0.5668599137373209,-0.7974448973158881,-0.8722320691862575,0.4307907238370776,-0.26511337557327286,-0.15445515250581054,-0.189723002989593,-0.468143887811946,0.22727379112569715,-1.303133021627445,-0.4087227299340097,0.9864512569013449,0.5817526875848472,-0.07883810140136752,1.51412836709446,1.6148469669858276,-0.44246663451706963,2.4444662471063223,1.2584625009784378,-2.8991801309151604,0.8638158951120309,-0.5598370785024287,1.0238729351838058,-1.4774384431942817,0.24055971943743643,-1.4557651517751504,-1.0096207682946134,1.6371359961207452,0.3830717778073592,0.25433357415857594,-0.8817634367009203,0.4492416468042768,2.3026207875246456,2.442139536964414,0.8783761429164931,0.720856642416094,0.43000554391336293,-0.23100301302028894,2.1974421070212324,1.8732427117858537,-2.668659004159594,-1.1527702335348178,3.1425490859813796,1.6491730781588683,1.7948975080027894,0.38559661141166945,1.7608547105330432,2.008235949246645,0.7358166433552681,-0.08122630352093316,2.114503723159671,0.9061377697191726,0.047546335640263414,2.8700760526861293,-0.32209699592258095,-1.3153470028439291,2.2304199735849166,2.1279451402218026,-1.1126366646457426,0.609070131774682,-1.107182346406877,0.7567275010484438,1.500595619799972,-1.3135776873088758,-0.5353857959613444,0.059218971834394986,0.6395495125822629,1.5118076695345017,-0.41781417717798935,-0.7313798063411077,-1.7961778180876358,-2.300384872649991,-0.45509831320230354,-1.386349148126922,-0.08438703027240153,0.5510428769311153,-0.8259085097878479,-0.7980576998634633,0.1772003273120499,-0.7011561838225749,-1.2368989411338187,-1.493018152286933,0.8645165642611026,-0.2154394108814634,0.5351128777147461,0.49556126195538713,-1.6237271245925113,-0.702178808360159,-2.628868300646106,-0.3863036629404409,0.19571985780671497,-1.1040405640325095,0.5055117965688646,-0.7724709328368565,-1.6994228220572944,0.5880749347327702,0.8366949967290958,-0.6857045778782477,0.8237882457879172,0.03288631108557895,0.6097985003170915,-0.7251082159422549,-0.3385026479219341,0.5435857433144003,0.3217241418704148,-0.35439757736379607,0.5480158888114145,-1.6526962601195114,-0.5021342325198519,-1.1203820880331707,-2.489945766827548,3.109572520431705,0.1650988097079278,1.301489263598161,1.3126307107049384,-0.8982423039793036,1.3787487368561702,-1.2492597555994047,-0.9267440802512624,-0.09017394257380242,-0.8268970591276822,-0.24547008869347134,0.019365472239438478,-1.0180482133600142,-1.5247693944906076,-0.8336654936721672,-1.932523523272206,-0.7399246168580849,2.4406354733932996,1.0541566129757465,-1.4872829657048352,1.2643031446679325,2.2349888215371694,-0.7921139475400407,-0.9758277876504423,-0.034865892700996645,-0.8812995493180242,-0.8161128438339855,0.4268541143521957,-0.2526180913198309,-1.277470421593248,1.170783644055155,-0.6828710306673286,1.0132909838861248,-0.05380080763851543,2.1600856043055177,2.245042533084377,-0.9817003807322787,1.5716194033215976,-0.95650103273916,-0.4291781346106862,0.5642639046971313,-0.7919390825943442,-1.2854651795992937,-2.342821098723383,0.5605158129954164,-2.0497874563457184,-0.9102825254858493,0.841856219613808,-0.566960118238622,-0.8869361156457944,-0.6033925042183336,1.6629999975069543,0.20573956601979065,0.49203411857742024,-1.2501807198780188],"type":"scatter"}],                        {"autosize":false,"height":550,"title":{"text":""},"width":1000,"xaxis":{"title":{"text":"Principal Component 1 (PC1)"}},"yaxis":{"title":{"text":"Principal Component 2 (PC2)"}},"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('7079ba52-3209-4c60-b27c-7050b02c2ffb');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<aside class="notes">
+<p>Mention that Wikipedia for math and in particular statistics is fine to use.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="ancestry-determination" class="slide level2">
-<h2>Ancestry Determination</h2>
-<ul>
-<li>Why is ancestry important?</li>
-<li>Challenges in determining ancestry</li>
-<li>Using PCA for ancestry inference</li>
-<li>Limitations of ancestry determination methods</li>
-</ul>
+<section id="population-structure" class="slide level2">
+<h2>Population Structure</h2>
+<p>Exclude SNPs in high-LD or HLA regions For PCA, we first exclude SNPs in high-LD or HLA regions from the genotype data. Copy the list of high-LD or HLA regions in Genome build version to a text file <code>high-ld.txt</code>.</p>
+<p><a href="https://genome.sph.umich.edu/wiki/Regions_of_high_LD">High-LD-regions</a></p>
+<p>High LD regions of hg19</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a>    <span class="fu">head</span> <span class="at">-n</span> 4 /scratch/bioinf/gd5302/data/p1/03_pca/high-ld.txt</span>
+<span id="cb25-2"><a href="#cb25-2"></a>    <span class="ex">1</span>   48000000    52000000    highld</span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="ex">2</span>   86000000    100500000   highld</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="ex">2</span>   134500000   138000000   highld</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="ex">2</span>   183000000   190000000   highld</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="association-testing" class="slide level2">
-<h2>Association Testing</h2>
-<ul>
-<li>Basics of association testing</li>
-<li>Common statistical tests used</li>
-<li>Correcting for population structure</li>
-<li>Challenges and considerations in association testing</li>
-</ul>
+<section class="slide level2">
+
+<h3 id="population-structure---high-ld">Population Structure - high-LD</h3>
+<p>Next, use <code>high-ld.txt</code> to extract all SNPs which are located in the regions described in the file using the code as follows: Create a list of SNPs in the regions specified in <code>high-ld.txt</code></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a>    <span class="va">plinkFile</span><span class="op">=</span><span class="st">"../02_data_qc/sample_data.clean"</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>    </span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="ex">plink</span> <span class="dt">\</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>        <span class="at">--bfile</span> <span class="va">${plinkFile}</span> <span class="dt">\</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>        <span class="at">--make-set</span> high-ld-hg19.txt <span class="dt">\</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>        <span class="at">--write-set</span> <span class="dt">\</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>        <span class="at">--out</span> hild</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All SNPs in the regions will be extracted to <code>hild.set</code>.</p>
+<pre><code>```Bash
+head -n4 hild.set
+highld
+1:48000156:C:G
+1:48002096:C:G
+1:48003081:T:C
+```</code></pre>
+<p>Now we can exclude these SNPs using <code>--exclude hild.set</code>.</p>
 </section>
-<section id="qc-pca-workflow" class="slide level2">
-<h2>QC + PCA Workflow</h2>
-<ul>
-<li>Illustrative workflow diagram</li>
-<li>Integration of QC and PCA</li>
-<li>Importance of sequential analysis steps</li>
-<li>Examples of QC and PCA results</li>
-</ul>
+<section class="slide level2">
+
+<h3 id="pca-steps---a">PCA steps - A</h3>
+<p>PCA analysis</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a>    <span class="va">plinkFile</span><span class="op">=</span><span class="st">""</span> <span class="co">#your own path</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>    <span class="va">outPrefix</span><span class="op">=</span><span class="st">"plink_results"</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>    <span class="va">threadnum</span><span class="op">=</span>2</span>
+<span id="cb28-4"><a href="#cb28-4"></a>    <span class="ex">hildset</span> = hild.set </span>
+<span id="cb28-5"><a href="#cb28-5"></a>    </span>
+<span id="cb28-6"><a href="#cb28-6"></a>    <span class="co"># LD-pruning, excluding high-LD and HLA regions</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>    <span class="ex">plink2</span> <span class="dt">\</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>          <span class="at">--bfile</span> <span class="va">${plinkFile}</span> <span class="dt">\</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>          <span class="at">--maf</span> 0.01 <span class="dt">\</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>            <span class="at">--threads</span> <span class="va">${threadnum}</span> <span class="dt">\</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a>            <span class="at">--exclude</span> <span class="va">${hildset}</span> <span class="dt">\ </span></span>
+<span id="cb28-12"><a href="#cb28-12"></a>            <span class="ex">--indep-pairwise</span> 500 50 0.2 <span class="dt">\</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a>          <span class="at">--out</span> <span class="va">${outPrefix}</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>    </span>
+<span id="cb28-15"><a href="#cb28-15"></a>    <span class="co"># Remove related samples using king-cuttoff</span></span>
+<span id="cb28-16"><a href="#cb28-16"></a>    <span class="ex">plink2</span> <span class="dt">\</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a>          <span class="at">--bfile</span> <span class="va">${plinkFile}</span> <span class="dt">\</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a>            <span class="at">--extract</span> <span class="va">${outPrefix}</span>.prune.in <span class="dt">\</span></span>
+<span id="cb28-19"><a href="#cb28-19"></a>          <span class="at">--king-cutoff</span> 0.0884 <span class="dt">\</span></span>
+<span id="cb28-20"><a href="#cb28-20"></a>            <span class="at">--threads</span> <span class="va">${threadnum}</span> <span class="dt">\</span></span>
+<span id="cb28-21"><a href="#cb28-21"></a>          <span class="at">--out</span> <span class="va">${outPrefix}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="case-study-ancestry-inference" class="slide level2">
-<h2>Case Study: Ancestry Inference</h2>
-<ul>
-<li>Real-world example</li>
-<li>Application of QC and PCA</li>
-<li>Inference of ancestry using GWAS data</li>
-<li>Interpretation of ancestry results</li>
-</ul>
+<section class="slide level2">
+
+<h3 id="pca-steps---b">PCA steps - B</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a>    <span class="co"># PCA after pruning and removing related samples</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>    <span class="ex">plink2</span> <span class="dt">\</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>          <span class="at">--bfile</span> <span class="va">${plinkFile}</span> <span class="dt">\</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>          <span class="at">--keep</span> <span class="va">${outPrefix}</span>.king.cutoff.in.id <span class="dt">\</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>            <span class="at">--extract</span> <span class="va">${outPrefix}</span>.prune.in <span class="dt">\</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>            <span class="at">--freq</span> counts <span class="dt">\</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>            <span class="at">--threads</span> <span class="va">${threadnum}</span> <span class="dt">\</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>          <span class="at">--pca</span> approx allele-wts 10 <span class="dt">\ </span>    </span>
+<span id="cb29-9"><a href="#cb29-9"></a>          <span class="ex">--out</span> <span class="va">${outPrefix}</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a>    </span>
+<span id="cb29-11"><a href="#cb29-11"></a>    <span class="co"># Projection (related and unrelated samples)</span></span>
+<span id="cb29-12"><a href="#cb29-12"></a>    <span class="ex">plink2</span> <span class="dt">\</span></span>
+<span id="cb29-13"><a href="#cb29-13"></a>          <span class="at">--bfile</span> <span class="va">${plinkFile}</span> <span class="dt">\</span></span>
+<span id="cb29-14"><a href="#cb29-14"></a>            <span class="at">--threads</span> <span class="va">${threadnum}</span> <span class="dt">\</span></span>
+<span id="cb29-15"><a href="#cb29-15"></a>          <span class="at">--read-freq</span> <span class="va">${outPrefix}</span>.acount <span class="dt">\</span></span>
+<span id="cb29-16"><a href="#cb29-16"></a>            <span class="at">--score</span> <span class="va">${outPrefix}</span>.eigenvec.allele 2 5 header-read no-mean-imputation variance-standardize <span class="dt">\</span></span>
+<span id="cb29-17"><a href="#cb29-17"></a>          <span class="at">--score-col-nums</span> 6-15 <span class="dt">\</span></span>
+<span id="cb29-18"><a href="#cb29-18"></a>          <span class="at">--out</span> <span class="va">${outPrefix}</span>_projected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="case-study-association-testing" class="slide level2">
-<h2>Case Study: Association Testing</h2>
-<ul>
-<li>Application of association testing</li>
-<li>Accounting for population structure</li>
-<li>Identifying genetic variants associated with traits</li>
-<li>Implications of association testing results</li>
-</ul>
+<section id="plot-the-pca" class="slide level2">
+<h2>Plot the PCA</h2>
+<p>You can now create scatterplots of the PCs using a Python script <code>03_pca/plot_pca.py</code> or a Jupyter notebook.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a>pca <span class="op">=</span> pd.read_table(<span class="st">"../03_pca/plink_results_projected.sscore"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb30-6"><a href="#cb30-6"></a>ped <span class="op">=</span> pd.read_table(<span class="st">"../01_dataset/integrated_call_samples_v3.20130502.ALL.panel"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb30-7"><a href="#cb30-7"></a>pcaped <span class="op">=</span> pd.merge(pca, ped, right_on<span class="op">=</span><span class="st">"sample"</span>, left_on<span class="op">=</span><span class="st">"IID"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span>
+<span id="cb30-8"><a href="#cb30-8"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb30-9"><a href="#cb30-9"></a>sns.scatterplot(data<span class="op">=</span>pcaped, x<span class="op">=</span><span class="st">"PC1_AVG"</span>, y<span class="op">=</span><span class="st">"PC2_AVG"</span>, hue<span class="op">=</span><span class="st">"pop"</span>, s<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb30-10"><a href="#cb30-10"></a>plt.savefig(<span class="st">"pca_plot.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="conclusion" class="slide level2">
-<h2>Conclusion</h2>
+<section id="references" class="slide level2">
+<h2>References</h2>
 <ul>
-<li>Summary of key points</li>
-<li>Importance of QC, PCA, and ancestry determination</li>
-<li>Future directions in GWAS analysis</li>
-<li>Q&amp;A session</li>
+<li>Price, A., Patterson, N., Plenge, R. et al.&nbsp;(2006) Principal components analysis corrects for stratification in genome-wide association studies. Nat Genet 38, 904–909.</li>
+<li>Price, A. L., (2008). Long-range LD can confound genome scans in admixed populations. American journal of human genetics, 83(1), 132–139.</li>
+<li>Manichaikul, A., Mychaleckyj, J. C., Rich, S. S., Daly, K., Sale, M., &amp; Chen, W. M. (2010). Robust relationship inference in genome-wide association studies. Bioinformatics, 26(22), 2867-2873.</li>
 </ul>
 </section>
 <section id="questions" class="slide level2">
@@ -424,7 +959,7 @@
 
 
 <img src="images/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
-<p><a href="https://maff1.io/website/">maff1.github.io/website</a></p>
+<p><a href="https://maff1.io/gd5302/">maff1.github.io/gd5302</a></p>
 </div>
 </section>
     </div>

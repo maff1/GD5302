@@ -39,6 +39,8 @@ website:
             text: Schedule
           - href: course-teachers.qmd
             text: Teachers
+          - href: task.qmd
+            text: Coursework
 format:
   html:
     theme:
@@ -47,6 +49,8 @@ format:
     mainfont: "Atkinson Hyperlegible"
     code-copy: true
     code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
     toc: true
 
 freeze: auto

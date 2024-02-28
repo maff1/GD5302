@@ -1,0 +1,49 @@
+---
+title: "Polygenic Risk Score Analysis in Alzheimer's Disease"
+---
+
+# Polygenic Risk Score Analysis for Alzheimer's Disease
+
+## Objective
+The objective of this task is to familiarize students with the process of calculating Polygenic Risk Scores (PRS) using Genome-Wide Association Study (GWAS) summary data and real genotype data for Alzheimer's Disease (AD). Students will perform Quality Control (QC) on the genotype data, conduct Principal Component Analysis (PCA) to account for population structure, and calculate PRS for AD.
+
+## Materials
+1. GWAS summary data for Alzheimer's Disease.
+2. Real genotype data for Alzheimer's Disease.
+3. PLINK software for QC and PCA.
+4. PRSice software for calculating Polygenic Risk Scores.
+5. Statistical software (R, Python, etc.) for data analysis and visualization.
+
+## Tasks
+1. **Data Preparation:**
+   - Download the GWAS summary data for Alzheimer's Disease from a reliable source or database.
+   - Obtain real genotype data for Alzheimer's Disease from a suitable dataset or repository.
+
+2. **Quality Control (QC):**
+   - Use PLINK software to perform QC on the genotype data.
+   - Include steps such as removing low-quality variants, filtering based on Minor Allele Frequency (MAF), and excluding individuals with high missingness or relatedness.
+
+3. **Population Structure Analysis:**
+   - Conduct Principal Component Analysis (PCA) using PLINK or other suitable software.
+   - Visualize population structure by plotting the top principal components and assessing clustering patterns.
+
+4. **Polygenic Risk Score Calculation:**
+   - Utilize PRSice software to calculate Polygenic Risk Scores for Alzheimer's Disease.
+   - Input the QC-passed genotype data and GWAS summary statistics into PRSice.
+   - Choose appropriate p-value thresholds for SNP inclusion in the PRS calculation.
+   - Calculate PRS for each individual in the dataset.
+
+5. **Data Analysis and Interpretation:**
+   - Evaluate the distribution of PRS in the study population.
+   - Assess the association between PRS and AD status or other relevant phenotypes using appropriate statistical tests.
+   - Interpret the results in the context of polygenic risk for Alzheimer's Disease and its implications for disease prediction or understanding genetic predisposition.
+
+6. **Report and Presentation:**
+   - Prepare a comprehensive report detailing the methodology, results, and interpretations.
+   - Include visualizations such as PCA plots and PRS distribution histograms.
+   - Present findings to peers or instructors, discussing key insights and potential future directions for research.
+
+## Additional Instructions
+- Document all commands, parameters, and scripts used in the analysis.
+- Seek guidance from instructors or experts if encountering difficulties during the analysis process.
+- Emphasize the importance of rigorous QC and careful interpretation of PRS results in the context of complex traits like Alzheimer's Disease.

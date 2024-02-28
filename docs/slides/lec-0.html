@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -335,55 +400,163 @@
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<ul>
-<li>What are GWAS?</li>
-<li>Importance of GWAS in disease research</li>
-<li>Key concepts: SNPs, genetic variants, allele frequencies</li>
-</ul>
+<aside class="notes">
+<p>Overview of WGS analysis. WGS data were generated using identical protocols at the same facility and all WGS data were jointly processed and analyzed. The schizophrenia cases also had GWA SNP array and exomesequencing data for comparison for the purpose of quality assessment. We started with 1165 schizophrenia cases and 942 ancestry-matched population controls. After QC, 1162 cases and 936 controls remained. Variant annotation focused on empirically determined annotation methods. - What are GWAS? - Key concepts: SNPs, genetic variants, allele frequencies</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p><img data-src="images/lec-0-wgs-snp.png" style="width:125.0%"> <a href="https://doi.org/10.1038/s41467-020-15707-w">ref.</a></p>
 </section>
 <section id="methodology" class="slide level2">
 <h2>Methodology</h2>
+<aside class="notes">
+<p>Common steps in a GWAS study (1-4).</p>
+<p>a | Data can be gathered from study cohorts or obtained from biobanks and repositories containing genetic and phenotypic information. It’s imperative to address confounders and avoid recruitment biases like collider bias.</p>
+<p>b | Genotypic data can be acquired through microarrays for common variants or next-generation sequencing methods like whole-genome sequencing (WGS) or whole-exome sequencing (WES).</p>
+<p>c | Quality control involves wet-lab steps such as genotype calling and DNA switches, and dry-lab processes like filtering out poor single-nucleotide polymorphisms (SNPs) and individuals, detecting population strata, and computing principal components. The figure illustrates clustering based on genetic substrata.</p>
+<p>d | Phasing genotypic data and imputing untyped genotypes rely on reference populations from repositories such as the 1000 Genomes Project or TopMed. The example demonstrates imputation of genotypes like SNP1 and SNP3 based on directly assayed genotypes of other SNPs.</p>
+<p>e | Genetic association tests are conducted for each variant, utilizing appropriate models (e.g., additive, non-additive, linear, or logistic regression). Corrections for confounders and management of multiple testing are essential, with inspection for unusual patterns and generation of summary statistics.</p>
+<p>f | Results from multiple smaller cohorts are merged using standardized statistical pipelines.</p>
+<p>g | Results are replicated either internally or externally in an independent cohort, necessitating ancestral matching and absence of shared individuals or family members between cohorts.</p>
+<p>h | In silico analysis of genome-wide association studies (GWAS) involves utilizing external resources for tasks like fine-mapping, SNP to gene mapping, gene to function mapping, pathway analysis, genetic correlation analysis, Mendelian randomization, and polygenic risk prediction. Experimental validation or testing in relevant human models follows GWAS.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="columns">
+<div class="column" style="width:25%;">
 <ol type="1">
 <li>Study design</li>
 <li>Data collection</li>
 <li>Statistical analysis</li>
 <li>Replication and validation</li>
 </ol>
+</div><div class="column" style="width:70%;">
+<p><img data-src="images/lec-0-gwas-main-steps.webp" style="width:85.0%"> <a href="https://www.nature.com/articles/s43586-021-00056-9">ref.</a></p>
+</div>
+</div>
 </section>
-<section id="case-study-diabetes" class="slide level2">
-<h2>Case Study: Diabetes</h2>
-<ul>
-<li>Brief overview of diabetes</li>
-<li>GWAS findings related to diabetes</li>
-<li>Implications for understanding disease mechanisms</li>
-</ul>
+<section class="slide level2">
+
+<h3 id="gwas-results-visualisation">GWAS results visualisation</h3>
+<aside class="notes">
+<p>a | Manhattan plot illustrating the significance of each variant’s correlation with a phenotype (specifically, body mass index in this context). Each point represents a single-nucleotide polymorphism (SNP), arranged along the x-axis based on their genomic locations. The y-axis denotes the strength of association, measured as -log10 transformed P values. A red line indicates the threshold for genome-wide significance (P &lt; 5 × 10–8).</p>
+<p>b | Quantile–quantile plot demonstrating the distribution of expected P values under a null hypothesis of no significance versus observed P values. Expected -log10 transformed P values (x-axis) for each association are plotted against observed values (y-axis) to visualize the enrichment of association signal. Deviation from the null hypothesis expectation (depicted by the red line) suggests the presence of genuine causal effects or insufficiently adjusted population stratification. For genuine causal effects, the deviation is expected predominantly on the right side of the plot, while population stratification causes the deviation to commence closer to the origin. In this instance, due to the extreme polygenicity of BMI and the high power of the genome-wide association study (GWAS), the deviation may begin near the origin, complicating the visual identification of stratification. LDSC analysis can be employed to determine whether this inflation is attributed to bias or polygenicity.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Manhattan plot <img data-src="images/lec-0-manhplot.png" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<p>Quantile–quantile plot <img data-src="images/lec-0-qqplot.png" style="width:100.0%"></p>
+</div>
+</div>
+<p><a href="https://www.nature.com/articles/s43586-021-00056-9">ref.</a></p>
 </section>
+<section id="statistical-power" class="slide level2">
+<h2>Statistical Power</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">source</span>(<span class="st">"../scripts/L0/power_calculator.R"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>n<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5000</span>, <span class="at">by=</span><span class="dv">100</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>qsq<span class="ot">=</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>pval<span class="ot">=</span><span class="fl">1E-5</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>pow <span class="ot">=</span> <span class="fu">power_n_hsq</span>( <span class="at">n=</span>n, <span class="at">qsq=</span>qsq, <span class="at">pval=</span>pval )</span>
+<span id="cb1-11"><a href="#cb1-11"></a>powm <span class="ot">=</span> <span class="fu">melt</span>(pow)</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">colnames</span>(powm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"x"</span>,<span class="st">"y"</span>,<span class="st">"Power"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a>cols<span class="ot">=</span><span class="fu">brewer.pal</span>(<span class="dv">9</span>,<span class="st">"YlOrRd"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>powm, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y,<span class="at">z=</span>Power)) <span class="sc">+</span> </span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Power),<span class="at">interpolate=</span><span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb1-18"><a href="#cb1-18"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colours=</span>cols) <span class="sc">+</span> </span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1709</span>), <span class="at">linetype=</span><span class="st">"longdash"</span>) <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.1</span>), <span class="at">linetype=</span><span class="st">"longdash"</span>) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(powm<span class="sc">$</span>x), <span class="fu">max</span>(powm<span class="sc">$</span>x), <span class="at">by =</span> <span class="dv">500</span>)) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb1-23"><a href="#cb1-23"></a>  <span class="fu">xlab</span>(<span class="st">"sample size (N)"</span>) <span class="sc">+</span> </span>
+<span id="cb1-24"><a href="#cb1-24"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(heritability<span class="sc">~</span>h<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="fu">print</span>( p )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="lec-0_files/figure-revealjs/fig-power-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;1: Power calculation at <span class="math inline">\(p-value=1e^{-5}\)</span> for quantitative traits across a range of sample sizes (N) and heritability (<span class="math inline">\(h^2\)</span>)</p></section>
 <section id="case-study-cancer" class="slide level2">
 <h2>Case Study: Cancer</h2>
-<ul>
-<li>Overview of cancer</li>
-<li>GWAS findings related to cancer susceptibility</li>
-<li>Potential applications in personalized medicine</li>
-</ul>
+<aside class="notes">
+<p>Regional plots of the novel loci and forest plots of the lead loci variants identified in the all-cancer meta-analysis. Purple diamond symbols in the regional plots represent the lead variants of the loci. In the forest plots, dots indicate the odds ratios of the variant for each cancer and whiskers represent 95% confidence intervals.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p><img data-src="images/lec-0-cancer.webp" style="width:80.0%"> <a href="https://doi.org/10.1038/s41467-023-39136-7">ref.</a></p>
 </section>
-<section id="challenges-and-limitations" class="slide level2">
-<h2>Challenges and Limitations</h2>
-<ul>
-<li>Population stratification</li>
-<li>Statistical power</li>
-<li>Replication issues</li>
-<li>Interpretation of results</li>
-</ul>
+<section id="population-structure" class="slide level2">
+<h2>Population Structure</h2>
+<p>PCA clustering Principal Component Analysis (PCA) plot of 20 populations from 1000 Genomes Project.</p>
+<p><img data-src="images/lec-0-pop.webp" style="width:60.0%"> <a href="https://doi.org/10.1186/s12859-019-2680-1">ref.</a></p>
 </section>
-<section id="future-directions" class="slide level2">
-<h2>Future Directions</h2>
-<ul>
-<li>Multi-omics integration</li>
-<li>Machine learning approaches</li>
-<li>Pharmacogenomics</li>
-<li>Ethical considerations</li>
-</ul>
-</section>
+<section id="ethical-considerations" class="slide level2">
+<h2>Ethical considerations</h2>
+<blockquote>
+<p>“genetic data means personal data relating to the inherited or acquired genetic characteristics of a natural person which give unique information about the physiology or the health of that natural person and which result, in particular, from an analysis of a biological sample from the natural person in question”<sup>1</sup>.</p>
+</blockquote>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>genetic information is <code>personal data</code> and special category genetic data for the purposes of the <code>UK GDPR</code></p>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>UK GDPR defines genetic data in Article 4(13)</p></li></ol></aside></section>
+<section id="ethical-considerations-1" class="slide level2">
+<h2>Ethical considerations</h2>
+<p>The 23andMe media case</p>
+
+<img data-src="images/lec-0-23andme.png" style="width:100.0%" class="r-stretch"></section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
@@ -394,15 +567,13 @@
 </section>
 <section id="questions" class="slide level2">
 <h2>Questions?</h2>
-</section>
-<section class="slide level2">
-
 
 
 <img src="images/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
-<p><a href="https://maff1.io/website/">maff1.github.io/website</a></p>
+<p><a href="https://maff1.io/gd5302/">maff1.github.io/gd5302</a></p>
 </div>
 </section>
+
     </div>
   </div>
 
@@ -614,6 +785,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
