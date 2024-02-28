@@ -1,6 +1,6 @@
 # Website for GD5302: Health Data Science Practice
 
-🔗 https://maff1/gd5302/
+🔗 [https://maff1/gd5302/](https://maff1.github.io/GD5302/)
 
 
 Add ref:
