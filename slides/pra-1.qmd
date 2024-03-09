@@ -348,14 +348,14 @@ Plink F-coefficient
     	--out plink_results
 ```
 
-Check the output `F`:
+Check the output `F`
 
-    ```Bash
-    head -n3 plink_results.het
-        FID       IID       O(HOM)       E(HOM)        N(NM)            F
-    HG00403   HG00403       180222    1.796e+05       217363      0.01698
-    HG00404   HG00404       180127    1.797e+05       217553      0.01023
-    ```
+```Bash
+head -n3 plink_results.het
+    FID       IID       O(HOM)       E(HOM)        N(NM)            F
+HG00403   HG00403       180222    1.796e+05       217363      0.01698
+HG00404   HG00404       180127    1.797e+05       217553      0.01023
+```
 
 Commonly samples with heterozygosity F deviating more than 3 standard deviations (SD) from the mean are excluded. Some studies used a fixed value such as +-0.15 or +-0.2.
 
