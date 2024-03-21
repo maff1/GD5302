@@ -13,6 +13,6 @@ This page contains an outline of the topics, content, and coursework for the Pra
 |8|Wed, Mar 13 - 9-10AM|Lecture 0 - Genome-wide Association Studies (GWAS) and Disease|[🖥️](/slides/20240313_lecture.pdf "Lec slides"){aria-label="Lecture 0 slides"}| 
 |8|Fri, Mar 15 - 12-2PM|Practice 1 - GWAS QC + PCA|[🖥️](/slides/20240315_workshop.pdf "Pra slides"){aria-label="Pratice 1 slides"}|
 |9|Wed, Mar 20 - 9-10AM|Lecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)|[🖥️](/slides/lec-1.pdf "Lec slides"){aria-label="Lecture 1 slides"}|
-|9|Fri, Mar 22 - 12-2PM|Practice 2 - PRS + Gradient Boosting Machines (GBM) + coursework|[🖥️](/slides/pra-2.html "Pra slides"){aria-label="Practice 2 slides"}|
+|9|Fri, Mar 22 - 12-2PM|Practice 2 - Association Testing + Genotypes|[🖥️](/slides/pra-2.pdf "Pra slides"){aria-label="Practice 2 slides"}|
 |||Coursework|||[🖥️](/task.html "Coursework"){aria-label="Coursework description"}|
 :::

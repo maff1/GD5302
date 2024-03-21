@@ -102,7 +102,7 @@
     "href": "index.html",
     "title": "GD5302: Health Data Science Practice",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and coursework for the Practice module.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nSlides\nCheatsheet\nCoursework\n\n\n\n\n7\nFri, Mar 8 - 12-2PM\nPractice 0 - HPC + Shell basics (Bash) + SLURM\n🖥️\n🖥️, 🖥️\n\n\n\n8\nWed, Mar 13 - 9-10AM\nLecture 0 - Genome-wide Association Studies (GWAS) and Disease\n🖥️\n\n\n\n\n8\nFri, Mar 15 - 12-2PM\nPractice 1 - GWAS QC + PCA\n🖥️\n\n\n\n\n9\nWed, Mar 20 - 9-10AM\nLecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)\n🖥️\n\n\n\n\n9\nFri, Mar 22 - 12-2PM\nPractice 2 - PRS + Gradient Boosting Machines (GBM) + coursework\n🖥️\n\n\n\n\n\n\nCoursework\n\n\n🖥️"
+    "text": "This page contains an outline of the topics, content, and coursework for the Practice module.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nSlides\nCheatsheet\nCoursework\n\n\n\n\n7\nFri, Mar 8 - 12-2PM\nPractice 0 - HPC + Shell basics (Bash) + SLURM\n🖥️\n🖥️, 🖥️\n\n\n\n8\nWed, Mar 13 - 9-10AM\nLecture 0 - Genome-wide Association Studies (GWAS) and Disease\n🖥️\n\n\n\n\n8\nFri, Mar 15 - 12-2PM\nPractice 1 - GWAS QC + PCA\n🖥️\n\n\n\n\n9\nWed, Mar 20 - 9-10AM\nLecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)\n🖥️\n\n\n\n\n9\nFri, Mar 22 - 12-2PM\nPractice 2 - Association Testing + Genotypes\n🖥️\n\n\n\n\n\n\nCoursework\n\n\n🖥️"
   },
   {
     "objectID": "cheatsheets/cheatsheet-slurm.html",
