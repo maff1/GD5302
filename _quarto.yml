@@ -39,7 +39,7 @@ website:
             text: Schedule
           - href: course-teachers.qmd
             text: Teachers
-          - href: task.qmd
+          - href: coursework.qmd
             text: Coursework
 format:
   html:
