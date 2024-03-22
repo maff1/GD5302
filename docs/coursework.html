@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GD5302 - Health Data Science Practice - GD5302: Health Data Science Practice</title>
+<title>GD5302 - Health Data Science Practice - Practical 3: Genetics Practical (GD5302)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,8 +29,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./course-teachers.html" rel="next">
-<link href="./course-overview.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -63,8 +61,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta property="og:title" content="GD5302 - Health Data Science Practice - GD5302: Health Data Science Practice">
+<meta property="og:title" content="GD5302 - Health Data Science Practice - Practical 3: Genetics Practical (GD5302)">
 <meta property="og:description" content="">
 <meta property="og:site-name" content="GD5302 - Health Data Science Practice">
 </head>
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./course-overview.html">Module information</a></li><li class="breadcrumb-item"><a href="./index.html">Schedule</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Practical 3: Genetics Practical (GD5302)</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -109,13 +109,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
  <span class="menu-text">Module information</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./course-overview.html" class="sidebar-item-text sidebar-link">
@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Schedule</span></a>
   </div>
 </li>
@@ -148,14 +148,28 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#due-date-tuesday-16th-april-2024-week-13-at-1200-midday" id="toc-due-date-tuesday-16th-april-2024-week-13-at-1200-midday" class="nav-link active" data-scroll-target="#due-date-tuesday-16th-april-2024-week-13-at-1200-midday">Due date: Tuesday 16th April 2024 (Week 13) at 12:00 (midday)</a></li>
+  <li><a href="#genome-wide-association-studies-in-alzheimers-disease" id="toc-genome-wide-association-studies-in-alzheimers-disease" class="nav-link" data-scroll-target="#genome-wide-association-studies-in-alzheimers-disease">Genome-Wide Association Studies in Alzheimer’s Disease</a>
+  <ul class="collapse">
+  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a></li>
+  <li><a href="#report" id="toc-report" class="nav-link" data-scroll-target="#report">Report</a></li>
+  <li><a href="#marking" id="toc-marking" class="nav-link" data-scroll-target="#marking">Marking</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/maff1/website/edit/main/coursework.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/maff1/website/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">GD5302: Health Data Science Practice</h1>
+<h1 class="title">Practical 3: Genetics Practical (GD5302)</h1>
 </div>
 
 
@@ -170,81 +184,77 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This page contains an outline of the topics, content, and coursework for the Practice module.</p>
-<div class="column-screen-inset-right">
-<table class="table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 10%">
-<col style="width: 30%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Week</th>
-<th>Date</th>
-<th>Topic</th>
-<th style="text-align: center;">Slides</th>
-<th style="text-align: center;">Cheatsheet</th>
-<th style="text-align: center;">Coursework</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">7</td>
-<td>Fri, Mar 8 - 12-2PM</td>
-<td>Practice 0 - HPC + Shell basics (Bash) + SLURM</td>
-<td style="text-align: center;"><a href="./slides/pra-0.html" aria-label="Pratice 0 slides" title="Pra slides">🖥️</a></td>
-<td style="text-align: center;"><a href="./cheatsheets/cheatsheet-bash.html" aria-label="Bash cheatsheet" title="Bash cheatsheet">🖥️</a>, <a href="./cheatsheets/cheatsheet-slurm.html" aria-label="SLURM cheatsheet" title="SLURM cheatsheet">🖥️</a></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
-<td>Wed, Mar 13 - 9-10AM</td>
-<td>Lecture 0 - Genome-wide Association Studies (GWAS) and Disease</td>
-<td style="text-align: center;"><a href="./slides/20240313_lecture.pdf" aria-label="Lecture 0 slides" title="Lec slides">🖥️</a></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">8</td>
-<td>Fri, Mar 15 - 12-2PM</td>
-<td>Practice 1 - GWAS QC + PCA</td>
-<td style="text-align: center;"><a href="./slides/20240315_workshop.pdf" aria-label="Pratice 1 slides" title="Pra slides">🖥️</a></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">9</td>
-<td>Wed, Mar 20 - 9-10AM</td>
-<td>Lecture 1 - GWAS Statistics + Polygenic Risk Scores (PRS)</td>
-<td style="text-align: center;"><a href="./slides/lec-1.pdf" aria-label="Lecture 1 slides" title="Lec slides">🖥️</a></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">9</td>
-<td>Fri, Mar 22 - 12-2PM</td>
-<td>Practice 2 - Association Testing + Genotypes</td>
-<td style="text-align: center;"><a href="./slides/pra-2.pdf" aria-label="Practice 2 slides" title="Pra slides">🖥️</a></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td></td>
-<td>Coursework</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><a href="./coursework.html" aria-label="Coursework description" title="Coursework">🖥️</a></td>
-</tr>
-</tbody>
-</table>
-</div>
+<section id="due-date-tuesday-16th-april-2024-week-13-at-1200-midday" class="level2">
+<h2 class="anchored" data-anchor-id="due-date-tuesday-16th-april-2024-week-13-at-1200-midday">Due date: Tuesday 16th April 2024 (Week 13) at 12:00 (midday)</h2>
+<p>This accounts to 25% of the coursework grade. Please note that the Module Management System (MMS) is definitive for weighting and deadlines, which, occasionally have to be changed.</p>
+</section>
+<section id="genome-wide-association-studies-in-alzheimers-disease" class="level1">
+<h1>Genome-Wide Association Studies in Alzheimer’s Disease</h1>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<p>The objective of this task is to familiarize students with <code>Genome-Wide Association Studies (GWAS)</code> genotype data for <code>Alzheimer's Disease (AD)</code>. Students will perform Quality Control (QC) on the genotype data, conduct Principal Component Analysis (PCA) to account for population structure, association tests for AD, and build genotypes for a set of single nucleotide polymorphisms (SNPs).</p>
+</section>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
+<ol type="1">
+<li>Genotype data (Plink format with three files: <code>.bed</code>, <code>.bim</code>, <code>.fam</code>) from the <a href="https://www.internationalgenome.org/category/phase-3/">1000 genomes</a> phase 3 project.</li>
+<li>Simulated binary phenotype for AD.</li>
+<li>Annotation samples file for population structure.</li>
+<li>File with the regions of high levels of pairwise linkage disequilibrium (LD): <code>highld</code>.</li>
+</ol>
+</section>
+<section id="tasks" class="level2">
+<h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
+<ol type="1">
+<li><strong>Quality Control (QC):</strong>
+<ul>
+<li>Use PLINK software to perform QC on the genotype data.</li>
+<li>Include steps such as removing low-quality variants, filtering based on Minor Allele Frequency (MAF), and excluding individuals with high missingness or relatedness.</li>
+<li>Reuse the scripts (<code>02_data_qc</code>) from the teaching practicals.</li>
+<li>How many samples (<code>people</code>) and variants are available at the first QC-step? <code>tip: use the output .log file</code></li>
+<li>How many samples (<code>people</code>) and variants are available at the last QC-step? <code>tip: use the output .log file</code></li>
+</ul></li>
+<li><strong>Population Structure Analysis:</strong>
+<ul>
+<li>Conduct Principal Component Analysis (PCA) using PLINK software and display the PCA plot. Add a caption to the plot describing X-axis and Y-axis.</li>
+<li>Reuse the scripts (<code>03_pca</code>) from the teaching practicals to visualize population structure by plotting the first two principal components (<code>PC's</code>) and assessing clustering patterns.</li>
+<li>Which populations (<code>pop</code>) are represented in the study?</li>
+</ul></li>
+<li><strong>Association testing:</strong>
+<ul>
+<li>Perform an association test using the <code>AD binary phenotype</code> and correcting for population structure (<code>covariate</code>).</li>
+<li>Reuse the scripts <code>04_association_test</code> from the teaching practicals.</li>
+<li>How many SNP (ID) are lower than the pvalue (<code>P</code>) threshold: <span class="math inline">\(P&lt; 5×10^-8\)</span>. <code>tip: use the slurm-out-manhattan-plot.txt</code></li>
+<li>Which SNP (ID) has the lowest pvalue (<code>P</code>)? <code>tip: use the slurm-out-manhattan-plot.txt</code></li>
+<li>Display the Manhattan plot and add a caption describing X-axis and Y-axis.</li>
+</ul></li>
+<li><strong>Extract SNP genotypes:</strong>
+<ul>
+<li>Build the genotypes for the following SNP: <code>rs429358</code> and <code>rs7412</code>.</li>
+<li>Reuse the scripts <code>05_genotype</code> from the teaching practicals.</li>
+<li>How many alleles are in each SNP genotype? <code>tip: use the slurm-out-plot_genotypes.txt</code></li>
+<li>Display the distribution plots for each SNP and add a caption describing X-axis and Y-axis.</li>
+</ul></li>
+<li><strong>Describe the working environment of the analysis:</strong>
+<ul>
+<li>Using a maximum of 500 words describe the set of tools and resources that allowed you to perform this analysis. This should include the HPC, SSH connection from your local machine, job scheduler, and coding languages used in the scripts.</li>
+</ul></li>
+</ol>
+</section>
+<section id="report" class="level2">
+<h2 class="anchored" data-anchor-id="report">Report</h2>
+<p>A report in PDF format (<code>max. 10 pages</code>) which contains details of each step of the process (<code>tasks 1-5</code>), and justification for any decisions you take.</p>
+</section>
+<section id="marking" class="level2">
+<h2 class="anchored" data-anchor-id="marking">Marking</h2>
+<p>This practical will be marked according to the graduate school mark descriptors. All documents relating to the mark descriptors (and their conversion to the 20 point scale) can be found on the <a href="https://www.st-andrews.ac.uk/graduate-school/students/rules/msc-and-mlitt-documents">graduate school webpages</a>.</p>
+<p>Details for good academic practice are outlined on the <a href="https://www.st-andrews.ac.uk/students/rules/academicpractice">University webpages</a>.<br>
+Details on Graduate School penalties, extension request etc, please refer to the <a href="https://www.st-andrews.ac.uk/graduate-school/students/rules">student rules section</a>.</p>
+<p>Any use of AI tools, including large language models such as ChatGPT, needs to be acknowledged, referenced, and logged. If used, text generated by AI should be in quotation marks and referenced as private communication. Code and its comments need to be clearly highlighted and referenced. All AI interactions used for coding, or for report writing should be annexed to the submission as a searchable text file.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -595,25 +605,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./course-overview.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./course-teachers.html" class="pagination-link">
-        <span class="nav-page-text">Teachers</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">© Copyright 2024, Marco Fernandes</div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/maff1/website/edit/main/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/maff1/website/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    </div>
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>
