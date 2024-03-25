@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GD5302 - Health Data Science Practice - Plotting PCA</title>
+<title>GD5302 - Health Data Science Practice – add_and_check_missing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -94,16 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<meta property="og:title" content="GD5302 - Health Data Science Practice - Plotting PCA">
-<meta property="og:image" content="https://maff1.github.io/website/scripts/P1/plot_PCA_files/figure-html/cell-6-output-2.png">
-<meta property="og:site-name" content="GD5302 - Health Data Science Practice">
-<meta property="og:image:height" content="835">
-<meta property="og:image:width" content="866">
 </head>
 
 <body class="nav-sidebar docked">
@@ -115,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Plotting PCA</li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -185,719 +177,652 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#loading-files" id="toc-loading-files" class="nav-link active" data-scroll-target="#loading-files">loading files</a></li>
-  <li><a href="#merge-pca-and-population-information" id="toc-merge-pca-and-population-information" class="nav-link" data-scroll-target="#merge-pca-and-population-information">Merge PCA and population information</a></li>
-  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting">Plotting</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.dev/maff1/website/blob/main/scripts/P1/plot_PCA.ipynb" class="toc-action">Edit this page</a></p><p><a href="https://github.com/maff1/website/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Plotting PCA</h1>
-</div>
 
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
 
 <div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy.random <span class="im">as</span> nr</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="loading-files" class="level1">
-<h1>loading files</h1>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> pd.read_table(<span class="st">"../05_PCA/plink_results_projected.sscore"</span>,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nr.seed(<span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">#FID</th>
-<th data-quarto-table-cell-role="th">IID</th>
-<th data-quarto-table-cell-role="th">ALLELE_CT</th>
-<th data-quarto-table-cell-role="th">NAMED_ALLELE_DOSAGE_SUM</th>
-<th data-quarto-table-cell-role="th">PC1_AVG</th>
-<th data-quarto-table-cell-role="th">PC2_AVG</th>
-<th data-quarto-table-cell-role="th">PC3_AVG</th>
-<th data-quarto-table-cell-role="th">PC4_AVG</th>
-<th data-quarto-table-cell-role="th">PC5_AVG</th>
-<th data-quarto-table-cell-role="th">PC6_AVG</th>
-<th data-quarto-table-cell-role="th">PC7_AVG</th>
-<th data-quarto-table-cell-role="th">PC8_AVG</th>
-<th data-quarto-table-cell-role="th">PC9_AVG</th>
-<th data-quarto-table-cell-role="th">PC10_AVG</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>HG00403</td>
-<td>HG00403</td>
-<td>390256</td>
-<td>390256</td>
-<td>0.002903</td>
-<td>-0.024865</td>
-<td>0.010041</td>
-<td>0.009576</td>
-<td>0.006943</td>
-<td>-0.002223</td>
-<td>0.008223</td>
-<td>-0.001149</td>
-<td>0.003352</td>
-<td>0.004375</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>HG00404</td>
-<td>HG00404</td>
-<td>390696</td>
-<td>390696</td>
-<td>-0.000141</td>
-<td>-0.027965</td>
-<td>0.025389</td>
-<td>-0.005825</td>
-<td>-0.002747</td>
-<td>0.006585</td>
-<td>0.011380</td>
-<td>0.007777</td>
-<td>0.015998</td>
-<td>0.017893</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>HG00406</td>
-<td>HG00406</td>
-<td>388524</td>
-<td>388524</td>
-<td>0.007074</td>
-<td>-0.031545</td>
-<td>-0.004370</td>
-<td>-0.001262</td>
-<td>-0.011493</td>
-<td>-0.005395</td>
-<td>-0.006202</td>
-<td>0.004524</td>
-<td>-0.000871</td>
-<td>-0.002280</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>HG00407</td>
-<td>HG00407</td>
-<td>388808</td>
-<td>388808</td>
-<td>0.006840</td>
-<td>-0.025073</td>
-<td>-0.006527</td>
-<td>0.006797</td>
-<td>-0.011600</td>
-<td>-0.010233</td>
-<td>0.013957</td>
-<td>0.006187</td>
-<td>0.013806</td>
-<td>0.008253</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>HG00409</td>
-<td>HG00409</td>
-<td>391646</td>
-<td>391646</td>
-<td>0.000399</td>
-<td>-0.029033</td>
-<td>-0.018935</td>
-<td>-0.001360</td>
-<td>0.029044</td>
-<td>0.009428</td>
-<td>-0.017119</td>
-<td>-0.012964</td>
-<td>0.025360</td>
-<td>0.022907</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">495</td>
-<td>NA19087</td>
-<td>NA19087</td>
-<td>390232</td>
-<td>390232</td>
-<td>-0.082261</td>
-<td>0.033163</td>
-<td>0.045499</td>
-<td>-0.011398</td>
-<td>0.000027</td>
-<td>-0.006525</td>
-<td>0.012446</td>
-<td>-0.006743</td>
-<td>-0.016312</td>
-<td>0.023022</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">496</td>
-<td>NA19088</td>
-<td>NA19088</td>
-<td>391510</td>
-<td>391510</td>
-<td>-0.087183</td>
-<td>0.043433</td>
-<td>0.040188</td>
-<td>0.003610</td>
-<td>-0.000165</td>
-<td>0.002317</td>
-<td>0.000117</td>
-<td>0.007430</td>
-<td>-0.011886</td>
-<td>0.007730</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">497</td>
-<td>NA19089</td>
-<td>NA19089</td>
-<td>391462</td>
-<td>391462</td>
-<td>-0.084082</td>
-<td>0.036118</td>
-<td>-0.036355</td>
-<td>0.008738</td>
-<td>-0.037523</td>
-<td>0.004110</td>
-<td>0.008653</td>
-<td>-0.000563</td>
-<td>-0.001599</td>
-<td>0.015941</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">498</td>
-<td>NA19090</td>
-<td>NA19090</td>
-<td>392880</td>
-<td>392880</td>
-<td>-0.073580</td>
-<td>0.026163</td>
-<td>-0.032193</td>
-<td>0.006599</td>
-<td>-0.039060</td>
-<td>0.000687</td>
-<td>0.012213</td>
-<td>-0.000485</td>
-<td>-0.000336</td>
-<td>-0.031283</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">499</td>
-<td>NA19091</td>
-<td>NA19091</td>
-<td>389664</td>
-<td>389664</td>
-<td>-0.081632</td>
-<td>0.041455</td>
-<td>-0.032200</td>
-<td>0.003717</td>
-<td>-0.046712</td>
-<td>0.015191</td>
-<td>0.003119</td>
-<td>-0.004906</td>
-<td>-0.001811</td>
-<td>-0.020752</td>
-</tr>
-</tbody>
-</table>
-
-<p>500 rows × 14 columns</p>
+</div>
+<div class="cell" data-scrolled="true" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.ped"</span>,<span class="st">"w"</span>) <span class="im">as</span> new:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    new.write(<span class="st">""</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.ped"</span>,<span class="st">"r"</span>) <span class="im">as</span> old:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.ped"</span>,<span class="st">"a"</span>) <span class="im">as</span> new:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="dv">0</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> old.readlines():</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            genotypes <span class="op">=</span> line.split(<span class="st">" "</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">int</span>(<span class="bu">abs</span>(nr.normal(loc<span class="op">=</span><span class="fl">0.0</span>, scale<span class="op">=</span><span class="fl">0.75</span>, size<span class="op">=</span><span class="va">None</span>))<span class="op">/</span><span class="dv">100</span><span class="op">*</span> <span class="bu">len</span>(genotypes)<span class="op">//</span><span class="dv">2</span>)):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                index <span class="op">=</span> nr.randint(<span class="dv">2</span>, (<span class="bu">len</span>(genotypes)<span class="op">-</span><span class="dv">6</span>)<span class="op">//</span><span class="dv">2</span>)<span class="op">-</span><span class="dv">2</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                genotypes[<span class="dv">6</span><span class="op">+</span>index<span class="op">*</span><span class="dv">2</span>] <span class="op">=</span> <span class="st">"0"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                genotypes[<span class="dv">7</span><span class="op">+</span>index<span class="op">*</span><span class="dv">2</span>] <span class="op">=</span> <span class="st">"0"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            newline<span class="op">=</span><span class="st">" "</span>.join(genotypes)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            new.write(newline)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            count<span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(count)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        new.write(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504</code></pre>
 </div>
 </div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>.<span class="op">/</span>add_missing.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>PLINK v1.90b7.2 64-bit (11 Dec 2023)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2023 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.log.
+Options in effect:
+  --file 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing
+  --keep-allele-order
+  --make-bed
+  --missing
+  --out 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing
+
+24011 MB RAM detected; reserving 12005 MB for main workspace.
+.ped scan complete (for binary autoconversion).21212131313131314141414141515151515161616161617171717171818181818191919191920202020202121212121222222222223232323232424242424252525252525262626262627272727272828282828292929292930303030303131313131323232323233333333333434343434353535353536363636363737373737383838383839393939394040404040414141414142424242424343434343444444444445454545454646464646474747474748484848484949494949505050505050515151515152525252525353535353545454545455555555555656565656575757575758585858585959595959606060606061616161616262626262636363636364646464646565656565666666666667676767676868686868696969696970707070707171717171727272727273737373737474747474757575757575767676767677777777777878787878797979797980808080808181818181828282828283838383838484848484858585858586868686868787878787888888888889898989899090909090919191919192929292929393939393949494949495959595959696969696979797979798989898989999999999100%
+Performing single-pass .bed write (1235116 variants, 504 people).
+--file:3141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394%
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing-temporary.bed +
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing-temporary.bim +
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing-temporary.fam
+written.
+1235116 variants loaded from .bim file.
+504 people (0 males, 0 females, 504 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 504 founders and 0 nonfounders present.
+Calculating allele frequencies... 10111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989 done.
+Total genotyping rate is 0.993828.
+--missing: Sample missing data report written to
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.imiss, and
+variant-based missing data report written to
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.lmiss.
+1235116 variants and 504 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to 1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bed +
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.bim +
+1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.fam ... 101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899done.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>imiss <span class="op">=</span> pd.read_csv(<span class="st">"/home/yunye/work/GWASTutorial/01_Dataset/1KG.EAS.auto.snp.norm.nodup.split.rare002.common015/1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.imiss"</span>,sep<span class="op">=</span><span class="st">"\s+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ped <span class="op">=</span> pd.read_table(<span class="st">"../01_Dataset/integrated_call_samples_v3.20130502.ALL.panel"</span>,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>imiss[<span class="st">"F_MISS"</span>].hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">sample</th>
-<th data-quarto-table-cell-role="th">pop</th>
-<th data-quarto-table-cell-role="th">super_pop</th>
-<th data-quarto-table-cell-role="th">gender</th>
-<th data-quarto-table-cell-role="th">Unnamed: 4</th>
-<th data-quarto-table-cell-role="th">Unnamed: 5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>HG00096</td>
-<td>GBR</td>
-<td>EUR</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>HG00097</td>
-<td>GBR</td>
-<td>EUR</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>HG00099</td>
-<td>GBR</td>
-<td>EUR</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>HG00100</td>
-<td>GBR</td>
-<td>EUR</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>HG00101</td>
-<td>GBR</td>
-<td>EUR</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2499</td>
-<td>NA21137</td>
-<td>GIH</td>
-<td>SAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2500</td>
-<td>NA21141</td>
-<td>GIH</td>
-<td>SAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2501</td>
-<td>NA21142</td>
-<td>GIH</td>
-<td>SAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2502</td>
-<td>NA21143</td>
-<td>GIH</td>
-<td>SAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2503</td>
-<td>NA21144</td>
-<td>GIH</td>
-<td>SAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-<p>2504 rows × 6 columns</p>
+<pre><code>&lt;AxesSubplot: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="add_and_check_missing_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-</div>
-</section>
-<section id="merge-pca-and-population-information" class="level1">
-<h1>Merge PCA and population information</h1>
 <div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pcaped<span class="op">=</span>pd.merge(pca,ped,right_on<span class="op">=</span><span class="st">"sample"</span>,left_on<span class="op">=</span><span class="st">"IID"</span>,how<span class="op">=</span><span class="st">"inner"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pcaped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>(imiss[<span class="st">"F_MISS"</span>]<span class="op">&gt;</span><span class="fl">0.02</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">#FID</th>
-<th data-quarto-table-cell-role="th">IID</th>
-<th data-quarto-table-cell-role="th">ALLELE_CT</th>
-<th data-quarto-table-cell-role="th">NAMED_ALLELE_DOSAGE_SUM</th>
-<th data-quarto-table-cell-role="th">PC1_AVG</th>
-<th data-quarto-table-cell-role="th">PC2_AVG</th>
-<th data-quarto-table-cell-role="th">PC3_AVG</th>
-<th data-quarto-table-cell-role="th">PC4_AVG</th>
-<th data-quarto-table-cell-role="th">PC5_AVG</th>
-<th data-quarto-table-cell-role="th">PC6_AVG</th>
-<th data-quarto-table-cell-role="th">PC7_AVG</th>
-<th data-quarto-table-cell-role="th">PC8_AVG</th>
-<th data-quarto-table-cell-role="th">PC9_AVG</th>
-<th data-quarto-table-cell-role="th">PC10_AVG</th>
-<th data-quarto-table-cell-role="th">sample</th>
-<th data-quarto-table-cell-role="th">pop</th>
-<th data-quarto-table-cell-role="th">super_pop</th>
-<th data-quarto-table-cell-role="th">gender</th>
-<th data-quarto-table-cell-role="th">Unnamed: 4</th>
-<th data-quarto-table-cell-role="th">Unnamed: 5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>HG00403</td>
-<td>HG00403</td>
-<td>390256</td>
-<td>390256</td>
-<td>0.002903</td>
-<td>-0.024865</td>
-<td>0.010041</td>
-<td>0.009576</td>
-<td>0.006943</td>
-<td>-0.002223</td>
-<td>0.008223</td>
-<td>-0.001149</td>
-<td>0.003352</td>
-<td>0.004375</td>
-<td>HG00403</td>
-<td>CHS</td>
-<td>EAS</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>HG00404</td>
-<td>HG00404</td>
-<td>390696</td>
-<td>390696</td>
-<td>-0.000141</td>
-<td>-0.027965</td>
-<td>0.025389</td>
-<td>-0.005825</td>
-<td>-0.002747</td>
-<td>0.006585</td>
-<td>0.011380</td>
-<td>0.007777</td>
-<td>0.015998</td>
-<td>0.017893</td>
-<td>HG00404</td>
-<td>CHS</td>
-<td>EAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>HG00406</td>
-<td>HG00406</td>
-<td>388524</td>
-<td>388524</td>
-<td>0.007074</td>
-<td>-0.031545</td>
-<td>-0.004370</td>
-<td>-0.001262</td>
-<td>-0.011493</td>
-<td>-0.005395</td>
-<td>-0.006202</td>
-<td>0.004524</td>
-<td>-0.000871</td>
-<td>-0.002280</td>
-<td>HG00406</td>
-<td>CHS</td>
-<td>EAS</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>HG00407</td>
-<td>HG00407</td>
-<td>388808</td>
-<td>388808</td>
-<td>0.006840</td>
-<td>-0.025073</td>
-<td>-0.006527</td>
-<td>0.006797</td>
-<td>-0.011600</td>
-<td>-0.010233</td>
-<td>0.013957</td>
-<td>0.006187</td>
-<td>0.013806</td>
-<td>0.008253</td>
-<td>HG00407</td>
-<td>CHS</td>
-<td>EAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>HG00409</td>
-<td>HG00409</td>
-<td>391646</td>
-<td>391646</td>
-<td>0.000399</td>
-<td>-0.029033</td>
-<td>-0.018935</td>
-<td>-0.001360</td>
-<td>0.029044</td>
-<td>0.009428</td>
-<td>-0.017119</td>
-<td>-0.012964</td>
-<td>0.025360</td>
-<td>0.022907</td>
-<td>HG00409</td>
-<td>CHS</td>
-<td>EAS</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">495</td>
-<td>NA19087</td>
-<td>NA19087</td>
-<td>390232</td>
-<td>390232</td>
-<td>-0.082261</td>
-<td>0.033163</td>
-<td>0.045499</td>
-<td>-0.011398</td>
-<td>0.000027</td>
-<td>-0.006525</td>
-<td>0.012446</td>
-<td>-0.006743</td>
-<td>-0.016312</td>
-<td>0.023022</td>
-<td>NA19087</td>
-<td>JPT</td>
-<td>EAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">496</td>
-<td>NA19088</td>
-<td>NA19088</td>
-<td>391510</td>
-<td>391510</td>
-<td>-0.087183</td>
-<td>0.043433</td>
-<td>0.040188</td>
-<td>0.003610</td>
-<td>-0.000165</td>
-<td>0.002317</td>
-<td>0.000117</td>
-<td>0.007430</td>
-<td>-0.011886</td>
-<td>0.007730</td>
-<td>NA19088</td>
-<td>JPT</td>
-<td>EAS</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">497</td>
-<td>NA19089</td>
-<td>NA19089</td>
-<td>391462</td>
-<td>391462</td>
-<td>-0.084082</td>
-<td>0.036118</td>
-<td>-0.036355</td>
-<td>0.008738</td>
-<td>-0.037523</td>
-<td>0.004110</td>
-<td>0.008653</td>
-<td>-0.000563</td>
-<td>-0.001599</td>
-<td>0.015941</td>
-<td>NA19089</td>
-<td>JPT</td>
-<td>EAS</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">498</td>
-<td>NA19090</td>
-<td>NA19090</td>
-<td>392880</td>
-<td>392880</td>
-<td>-0.073580</td>
-<td>0.026163</td>
-<td>-0.032193</td>
-<td>0.006599</td>
-<td>-0.039060</td>
-<td>0.000687</td>
-<td>0.012213</td>
-<td>-0.000485</td>
-<td>-0.000336</td>
-<td>-0.031283</td>
-<td>NA19090</td>
-<td>JPT</td>
-<td>EAS</td>
-<td>female</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">499</td>
-<td>NA19091</td>
-<td>NA19091</td>
-<td>389664</td>
-<td>389664</td>
-<td>-0.081632</td>
-<td>0.041455</td>
-<td>-0.032200</td>
-<td>0.003717</td>
-<td>-0.046712</td>
-<td>0.015191</td>
-<td>0.003119</td>
-<td>-0.004906</td>
-<td>-0.001811</td>
-<td>-0.020752</td>
-<td>NA19091</td>
-<td>JPT</td>
-<td>EAS</td>
-<td>male</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-<p>500 rows × 20 columns</p>
+<pre><code>3</code></pre>
 </div>
 </div>
-</div>
-</section>
-<section id="plotting" class="level1">
-<h1>Plotting</h1>
 <div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>pcaped,x<span class="op">=</span><span class="st">"PC1_AVG"</span>,y<span class="op">=</span><span class="st">"PC2_AVG"</span>,hue<span class="op">=</span><span class="st">"pop"</span>,s<span class="op">=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lmiss <span class="op">=</span> pd.read_csv(<span class="st">"/home/yunye/work/GWASTutorial/01_Dataset/1KG.EAS.auto.snp.norm.nodup.split.rare002.common015/1KG.EAS.auto.snp.norm.nodup.split.rare002.common015.missing.lmiss"</span>,sep<span class="op">=</span><span class="st">"\s+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;Axes: xlabel='PC1_AVG', ylabel='PC2_AVG'&gt;</code></pre>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lmiss[<span class="st">"F_MISS"</span>].hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>&lt;AxesSubplot: &gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="plot_PCA_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
+<p><img src="add_and_check_missing_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>(lmiss[<span class="st">"F_MISS"</span>]<span class="op">&gt;</span><span class="fl">0.02</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>462</code></pre>
 </div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1254,7 +1179,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">© Copyright 2024, Marco Fernandes</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.dev/maff1/website/blob/main/coursework/scripts/add_and_check_missing.ipynb" class="toc-action">Edit this page</a></p><p><a href="https://github.com/maff1/website/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>

@@ -154,9 +154,10 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#due-date-tuesday-16th-april-2024-week-13-at-1200-midday" id="toc-due-date-tuesday-16th-april-2024-week-13-at-1200-midday" class="nav-link active" data-scroll-target="#due-date-tuesday-16th-april-2024-week-13-at-1200-midday">Due date: Tuesday 16th April 2024 (Week 13) at 12:00 (midday)</a></li>
-  <li><a href="#genome-wide-association-studies-in-alzheimers-disease" id="toc-genome-wide-association-studies-in-alzheimers-disease" class="nav-link" data-scroll-target="#genome-wide-association-studies-in-alzheimers-disease">Genome-Wide Association Studies in Alzheimer’s Disease</a>
+  <li><a href="#genome-wide-association-studies-in-type-2-diabetes-mellitus" id="toc-genome-wide-association-studies-in-type-2-diabetes-mellitus" class="nav-link" data-scroll-target="#genome-wide-association-studies-in-type-2-diabetes-mellitus">Genome-Wide Association Studies in Type 2 Diabetes Mellitus</a>
   <ul class="collapse">
   <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
   <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
   <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a></li>
   <li><a href="#report" id="toc-report" class="nav-link" data-scroll-target="#report">Report</a></li>
@@ -189,19 +190,23 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="due-date-tuesday-16th-april-2024-week-13-at-1200-midday">Due date: Tuesday 16th April 2024 (Week 13) at 12:00 (midday)</h2>
 <p>This accounts to 25% of the coursework grade. Please note that the Module Management System (MMS) is definitive for weighting and deadlines, which, occasionally have to be changed.</p>
 </section>
-<section id="genome-wide-association-studies-in-alzheimers-disease" class="level1">
-<h1>Genome-Wide Association Studies in Alzheimer’s Disease</h1>
+<section id="genome-wide-association-studies-in-type-2-diabetes-mellitus" class="level1">
+<h1>Genome-Wide Association Studies in Type 2 Diabetes Mellitus</h1>
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>The objective of this task is to familiarize students with <code>Genome-Wide Association Studies (GWAS)</code> genotype data for <code>Alzheimer's Disease (AD)</code>. Students will perform Quality Control (QC) on the genotype data, conduct Principal Component Analysis (PCA) to account for population structure, association tests for AD, and build genotypes for a set of single nucleotide polymorphisms (SNPs).</p>
+<p>The objective of this task is to familiarize students with <code>Genome-Wide Association Studies (GWAS)</code> genotype data. Students will perform Quality Control (QC), conduct Principal Component Analysis (PCA) to account for population structure, association tests for a simulated binary phenotype and build genotypes for a set of single nucleotide polymorphisms (SNPs).</p>
+</section>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>A research team investigating genetic data related to <code>Type 2 Diabetes Mellitus (T2DM)</code> experienced a hard disk drive failure on their High Performance Computing (HPC) system. Fortunately, they had a backup, which allowed them to retrieve some of the lost data. However, instead of obtaining a single file, they found several versions of the same dataset with similar timestamps. The research team had a previous set of plots for population structure and association analysis from previous analysis than they could use as <strong><em>ground truth</em></strong>. Uncertain about the integrity of each version, they tasked their data scientists with determining whether running a standard Genome-Wide Association Study (GWAS) pipeline would yield consistent results across the recovered datasets.</p>
 </section>
 <section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
 <ol type="1">
-<li>Genotype data (Plink format with three files: <code>.bed</code>, <code>.bim</code>, <code>.fam</code>) from the <a href="https://www.internationalgenome.org/category/phase-3/">1000 genomes</a> phase 3 project.</li>
-<li>Simulated binary phenotype for AD.</li>
-<li>Annotation samples file for population structure.</li>
-<li>File with the regions of high levels of pairwise linkage disequilibrium (LD): <code>highld</code>.</li>
+<li>Genotype data (Plink format with three files: <code>.bed</code>, <code>.bim</code>, <code>.fam</code>) from the <a href="https://www.internationalgenome.org/category/phase-3/">1000 genomes</a> phase 3 project. Available at the path <code>/scratch/bioinf/gd5302/coursework/student_dataset/USERNAME</code>.</li>
+<li>Simulated binary phenotype for T2DM: <code>student-001_phenotype.txt</code>.</li>
+<li>Sample annotation file: <code>integrated_call_samples_v3.20130502.ALL.panel</code>.</li>
+<li>File with the regions of high levels of pairwise linkage disequilibrium (LD): <code>high-ld-hg19.txt</code>.</li>
 </ol>
 </section>
 <section id="tasks" class="level2">
@@ -220,18 +225,63 @@ ul.task-list li input[type="checkbox"] {
 <li>Conduct Principal Component Analysis (PCA) using PLINK software and display the PCA plot. Add a caption to the plot describing X-axis and Y-axis.</li>
 <li>Reuse the scripts (<code>03_pca</code>) from the teaching practicals to visualize population structure by plotting the first two principal components (<code>PC's</code>) and assessing clustering patterns.</li>
 <li>Which populations (<code>pop</code>) are represented in the study?</li>
+<li>How does the plot compares with the one from the practicals? Speculate what could have gone wrong.</li>
 </ul></li>
+</ol>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 56%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Population Code</th>
+<th>Description</th>
+<th>Super Population Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CHB</td>
+<td>Han Chinese in Beijing, China</td>
+<td>EAS</td>
+</tr>
+<tr class="even">
+<td>JPT</td>
+<td>Japanese in Tokyo, Japan</td>
+<td>EAS</td>
+</tr>
+<tr class="odd">
+<td>CHS</td>
+<td>Southern Han Chinese</td>
+<td>EAS</td>
+</tr>
+<tr class="even">
+<td>CDX</td>
+<td>Chinese Dai in Xishuangbanna, China</td>
+<td>EAS</td>
+</tr>
+<tr class="odd">
+<td>KHV</td>
+<td>Kinh in Ho Chi Minh City, Vietnam</td>
+<td>EAS</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="1">
 <li><strong>Association testing:</strong>
 <ul>
-<li>Perform an association test using the <code>AD binary phenotype</code> and correcting for population structure (<code>covariate</code>).</li>
+<li>Perform an association test using the <code>T2DM binary phenotype</code> and correcting for population structure (<code>covariate</code>).</li>
 <li>Reuse the scripts <code>04_association_test</code> from the teaching practicals.</li>
 <li>How many SNP (ID) are lower than the pvalue (<code>P</code>) threshold: <span class="math inline">\(P&lt; 5×10^-8\)</span>. <code>tip: use the slurm-out-manhattan-plot.txt</code></li>
 <li>Which SNP (ID) has the lowest pvalue (<code>P</code>)? <code>tip: use the slurm-out-manhattan-plot.txt</code></li>
 <li>Display the Manhattan plot and add a caption describing X-axis and Y-axis.</li>
+<li>How does the plot compares with the one from the practicals? Speculate what could have gone wrong.</li>
 </ul></li>
 <li><strong>Extract SNP genotypes:</strong>
 <ul>
-<li>Build the genotypes for the following SNP: <code>rs429358</code> and <code>rs7412</code>.</li>
+<li>Build the genotypes for the following SNP: <code>19:47137162:C:A</code>.</li>
 <li>Reuse the scripts <code>05_genotype</code> from the teaching practicals.</li>
 <li>How many alleles are in each SNP genotype? <code>tip: use the slurm-out-plot_genotypes.txt</code></li>
 <li>Display the distribution plots for each SNP and add a caption describing X-axis and Y-axis.</li>

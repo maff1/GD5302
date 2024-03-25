@@ -6,16 +6,19 @@ title: "Practical 3: Genetics Practical (GD5302)"
 This accounts to 25% of the coursework grade.
 Please note that the Module Management System (MMS) is definitive for weighting and deadlines, which, occasionally have to be changed.
 
-# Genome-Wide Association Studies in Alzheimer's Disease
+# Genome-Wide Association Studies in Type 2 Diabetes Mellitus
 
 ## Objective
-The objective of this task is to familiarize students with `Genome-Wide Association Studies (GWAS)` genotype data for `Alzheimer's Disease (AD)`. Students will perform Quality Control (QC) on the genotype data, conduct Principal Component Analysis (PCA) to account for population structure, association tests for AD, and build genotypes for a set of single nucleotide polymorphisms (SNPs).
+The objective of this task is to familiarize students with `Genome-Wide Association Studies (GWAS)` genotype data. Students will perform Quality Control (QC), conduct Principal Component Analysis (PCA) to account for population structure, association tests for a simulated binary phenotype and build genotypes for a set of single nucleotide polymorphisms (SNPs).
+
+## Background
+A research team investigating genetic data related to `Type 2 Diabetes Mellitus (T2DM)` experienced a hard disk drive failure on their High Performance Computing (HPC) system. Fortunately, they had a backup, which allowed them to retrieve some of the lost data. However, instead of obtaining a single file, they found several versions of the same dataset with similar timestamps. The research team had a previous set of plots for population structure and association analysis from previous analysis than they could use as ***ground truth***. Uncertain about the integrity of each version, they tasked their data scientists with determining whether running a standard Genome-Wide Association Study (GWAS) pipeline would yield consistent results across the recovered datasets.
 
 ## Dataset
-1. Genotype data (Plink format with three files: `.bed`, `.bim`, `.fam`) from the [1000 genomes](https://www.internationalgenome.org/category/phase-3/) phase 3 project.
-2. Simulated binary phenotype for AD.
-3. Annotation samples file for population structure.
-4. File with the regions of high levels of pairwise linkage disequilibrium (LD): `highld`.
+1. Genotype data (Plink format with three files: `.bed`, `.bim`, `.fam`) from the [1000 genomes](https://www.internationalgenome.org/category/phase-3/) phase 3 project. Available at the path `/scratch/bioinf/gd5302/coursework/student_dataset/USERNAME`.
+2. Simulated binary phenotype for T2DM: `student-001_phenotype.txt`.
+3. Sample annotation file: `integrated_call_samples_v3.20130502.ALL.panel`.
+4. File with the regions of high levels of pairwise linkage disequilibrium (LD): `high-ld-hg19.txt`.
 
 
 ## Tasks
@@ -29,17 +32,27 @@ The objective of this task is to familiarize students with `Genome-Wide Associat
 2. **Population Structure Analysis:**
    - Conduct Principal Component Analysis (PCA) using PLINK software and display the PCA plot. Add a caption to the plot describing X-axis and Y-axis.
    - Reuse the scripts (`03_pca`) from the teaching practicals to visualize population structure by plotting the first two principal components (`PC's`) and assessing clustering patterns.
-   - Which populations (`pop`) are represented in the study?
+   - Which populations (`pop`) are represented in the study? 
+   - How does the plot compares with the one from the practicals? Speculate what could have gone wrong.
+  
+| Population Code | Description                                         | Super Population Code |
+|-----------------|-----------------------------------------------------|-----------------------|
+| CHB             | Han Chinese in Beijing, China                      | EAS                   |
+| JPT             | Japanese in Tokyo, Japan                           | EAS                   |
+| CHS             | Southern Han Chinese                                | EAS                   |
+| CDX             | Chinese Dai in Xishuangbanna, China                | EAS                   |
+| KHV             | Kinh in Ho Chi Minh City, Vietnam                  | EAS                   |
 
 3. **Association testing:**
-   - Perform an association test using the `AD binary phenotype` and correcting for population structure (`covariate`).
+   - Perform an association test using the `T2DM binary phenotype` and correcting for population structure (`covariate`).
    - Reuse the scripts `04_association_test` from the teaching practicals.
    - How many SNP (ID) are lower than the pvalue (`P`) threshold: $P< 5×10^-8$. `tip: use the slurm-out-manhattan-plot.txt` 
    - Which SNP (ID) has the lowest pvalue (`P`)? `tip: use the slurm-out-manhattan-plot.txt` 
-   - Display the Manhattan plot and add a caption describing X-axis and Y-axis.
+   - Display the Manhattan plot and add a caption describing X-axis and Y-axis. 
+   - How does the plot compares with the one from the practicals? Speculate what could have gone wrong.
 
 4. **Extract SNP genotypes:**
-   - Build the genotypes for the following SNP: `rs429358` and `rs7412`.
+   - Build the genotypes for the following SNP: `19:47137162:C:A`.
    - Reuse the scripts `05_genotype` from the teaching practicals.
    - How many alleles are in each SNP genotype? `tip: use the slurm-out-plot_genotypes.txt` 
    - Display the distribution plots for each SNP and add a caption describing X-axis and Y-axis.

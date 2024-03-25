@@ -1,67 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://maff1.github.io/website/scripts/P1/plot_PCA.html</loc>
-    <lastmod>2024-03-22T09:40:10.126Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/slides/pra-0.html</loc>
-    <lastmod>2024-03-22T09:40:09.030Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/slides/lec-1.html</loc>
-    <lastmod>2024-03-22T09:40:07.870Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/course-teachers.html</loc>
-    <lastmod>2024-03-22T09:40:06.818Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/LICENSE.html</loc>
-    <lastmod>2024-03-22T09:40:06.322Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/task.html</loc>
-    <lastmod>2024-03-22T09:40:05.558Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/cheatsheets/cheatsheet-slurm.html</loc>
-    <lastmod>2024-03-22T09:40:04.938Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/index.html</loc>
-    <lastmod>2024-03-22T09:40:04.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/README copy.html</loc>
-    <lastmod>2024-03-22T09:40:04.658Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/cheatsheets/cheatsheet-bash.html</loc>
-    <lastmod>2024-03-22T09:40:05.238Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/course-overview.html</loc>
-    <lastmod>2024-03-22T09:40:05.790Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/computing-access.html</loc>
-    <lastmod>2024-03-22T09:40:06.570Z</lastmod>
-  </url>
-  <url>
     <loc>https://maff1.github.io/website/coursework.html</loc>
-    <lastmod>2024-03-22T09:40:07.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/slides/pra-2.html</loc>
-    <lastmod>2024-03-22T09:40:07.634Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/slides/pra-1.html</loc>
-    <lastmod>2024-03-22T09:40:08.742Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maff1.github.io/website/slides/lec-0.html</loc>
-    <lastmod>2024-03-22T09:40:09.474Z</lastmod>
+    <lastmod>2024-03-25T14:26:00.243Z</lastmod>
   </url>
 </urlset>
