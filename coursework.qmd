@@ -15,8 +15,8 @@ The objective of this task is to familiarize students with `Genome-Wide Associat
 A research team investigating genetic data related to `Type 2 Diabetes Mellitus (T2DM)` experienced a hard disk drive failure on their High Performance Computing (HPC) system. Fortunately, they had a backup, which allowed them to retrieve some of the lost data. However, instead of obtaining a single file, they found several versions of the same dataset with similar timestamps. The research team had a previous set of plots for population structure and association analysis from previous analysis than they could use as ***ground truth***. Uncertain about the integrity of each version, they tasked their data scientists with determining whether running a standard Genome-Wide Association Study (GWAS) pipeline would yield consistent results across the recovered datasets.
 
 ## Dataset
-1. Genotype data (Plink format with three files: `.bed`, `.bim`, `.fam`) from the [1000 genomes](https://www.internationalgenome.org/category/phase-3/) phase 3 project. Available at the path `/scratch/bioinf/gd5302/coursework/student_dataset/USERNAME`.
-2. Simulated binary phenotype for T2DM: `student-001_phenotype.txt`.
+1. Genotype data (Plink format with three files: `.bed`, `.bim`, `.fam`) from the [1000 genomes](https://www.internationalgenome.org/category/phase-3/) phase 3 project. Available at the path `/scratch/bioinf/gd5302/coursework/student_datasets/USERNAME`.
+2. Simulated binary phenotype for T2DM: `*_phenotype.txt`.
 3. Sample annotation file: `integrated_call_samples_v3.20130502.ALL.panel`.
 4. File with the regions of high levels of pairwise linkage disequilibrium (LD): `high-ld-hg19.txt`.
 
@@ -46,7 +46,7 @@ A research team investigating genetic data related to `Type 2 Diabetes Mellitus 
 3. **Association testing:**
    - Perform an association test using the `T2DM binary phenotype` and correcting for population structure (`covariate`).
    - Reuse the scripts `04_association_test` from the teaching practicals.
-   - How many SNP (ID) are lower than the pvalue (`P`) threshold: $P< 5×10^-8$. `tip: use the slurm-out-manhattan-plot.txt` 
+   - How many SNP (ID) are lower than the pvalue (`P`) threshold: $P< 5×10^{-8}$. `tip: use the slurm-out-manhattan-plot.txt` 
    - Which SNP (ID) has the lowest pvalue (`P`)? `tip: use the slurm-out-manhattan-plot.txt` 
    - Display the Manhattan plot and add a caption describing X-axis and Y-axis. 
    - How does the plot compares with the one from the practicals? Speculate what could have gone wrong.
@@ -62,7 +62,7 @@ A research team investigating genetic data related to `Type 2 Diabetes Mellitus 
 
 
 ## Report
-A report in PDF format (`max. 10 pages`) which contains details of each step of the process (`tasks 1-5`), and justification for any decisions you take.
+Hand in via MMS a report in PDF format (`max. 10 pages`) which contains details of each step of the process (`tasks 1-5`), describing the methodology applied and decisions you take.
 
 ## Marking
 This practical will be marked according to the graduate school mark descriptors. All documents relating to the mark descriptors (and their conversion to the 20 point scale) can be found on the [graduate school webpages](https://www.st-andrews.ac.uk/graduate-school/students/rules/msc-and-mlitt-documents). 
